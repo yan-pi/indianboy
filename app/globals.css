@@ -21,6 +21,10 @@
 }
 
 /* Theme Variables */
+html {
+  font-size: 110%; /* 110% of browser default (typically 17.6px) */
+}
+
 :root {
   /* Colors */
   --color-background: white;
