@@ -6,17 +6,23 @@ export function Header() {
   return (
     <header className="mb-8 flex items-center justify-between">
       <div>
-        <Link href="/" className="font-medium theme-text-foreground">
-          Julien Nim
-        </Link>
+        <div className="mb-1 flex items-center space-x-2">
+          <Link href="/" className="theme-text-foreground font-medium">
+            Yan Fernandes
+          </Link>
+
+          <span className="font-serif text-xl text-[var(--color-muted-foreground)] italic">
+            aka indianboy
+          </span>
+        </div>
         <TextEffect
           as="p"
           preset="fade"
           per="char"
-          className="text-zinc-600 dark:text-zinc-500"
+          className="tect-lg text-[var(--color-muted-foreground)]"
           delay={0.5}
         >
-          Design Engineer
+          Staff Engineer
         </TextEffect>
       </div>
     </header>

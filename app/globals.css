@@ -26,54 +26,73 @@ html {
 }
 
 :root {
-  /* Colors */
-  --color-background: white;
-  --color-foreground: #09090b;
-  --color-muted: #f4f4f5;
-  --color-muted-foreground: #71717a;
-  --color-popover: white;
-  --color-popover-foreground: #09090b;
-  --color-border: #e4e4e7;
-  --color-input: #e4e4e7;
-  --color-card: white;
-  --color-card-foreground: #09090b;
-  --color-primary: #18181b;
-  --color-primary-foreground: #fafafa;
-  --color-secondary: #f4f4f5;
-  --color-secondary-foreground: #18181b;
-  --color-accent: #f4f4f5;
-  --color-accent-foreground: #18181b;
-  --color-destructive: #ef4444;
-  --color-destructive-foreground: #fafafa;
-  --color-ring: #18181b;
-  
+  /* Gruvbox-inspired Theme Colors */
+  --color-background: #fbf1c7;
+  --color-foreground: #3c3836;
+  --color-card: #f9f5d7;
+  --color-card-foreground: #3c3836;
+  --color-popover: #f9f5d7;
+  --color-popover-foreground: #3c3836;
+  --color-primary: #b8bb26;
+  --color-primary-foreground: #282828;
+  --color-secondary: #d5c4a1;
+  --color-secondary-foreground: #3c3836;
+  --color-muted: #f2e5bc;
+  --color-muted-foreground: #7c6f64;
+  --color-accent: #83a598;
+  --color-accent-foreground: #fbf1c7;
+  --color-destructive: #fb4934;
+  --color-destructive-foreground: #fbf1c7;
+  --color-border: #d5c4a1;
+  --color-input: #d5c4a1;
+  --color-ring: #b8bb26;
+  /* Chart & Sidebar (optional, not mapped to classes yet) */
+  --color-chart-1: #928374;
+  --color-chart-2: #d3869b;
+  --color-chart-3: #8ec07c;
+  --color-chart-4: #fabd2f;
+  --color-chart-5: #b8bb26;
+  --color-sidebar: #f9f5d7;
+  --color-sidebar-foreground: #3c3836;
+  --color-sidebar-primary: #b8bb26;
+  --color-sidebar-primary-foreground: #282828;
+  --color-sidebar-accent: #83a598;
+  --color-sidebar-accent-foreground: #fbf1c7;
+  --color-sidebar-border: #d5c4a1;
+  --color-sidebar-ring: #b8bb26;
+
+  /* Fonts */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* Border Radius */
+  --border-radius: 0.5rem;
+  --border-radius-lg: 0.5rem;
+  --border-radius-xl: 1rem;
+
+  /* Shadows */
+  --shadow-sm: 0 0 0 0 hsl(0 0% 0% / 0.00), 0 1px 2px -1px hsl(0 0% 0% / 0.00);
+  --shadow-md: 0 0 0 0 hsl(0 0% 0% / 0.00), 0 2px 4px -1px hsl(0 0% 0% / 0.00);
+  --shadow-lg: 0 0 0 0 hsl(0 0% 0% / 0.00), 0 4px 6px -1px hsl(0 0% 0% / 0.00);
+
   /* Spacing */
   --spacing-section: 6rem;
   --spacing-card: 1rem;
   --spacing-element: 1.25rem;
-  
-  /* Borders */
-  --border-radius: 0.75rem;
-  --border-radius-lg: 1rem;
-  --border-radius-xl: 1.5rem;
-  
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  
+
   /* Transitions */
   --transition-fast: 150ms;
   --transition-normal: 200ms;
   --transition-slow: 300ms;
-  
+
   /* Animation Configs */
   --animation-spring-bounce: 0.2;
   --animation-spring-stiffness: 26.7;
   --animation-spring-damping: 4.1;
   --animation-spring-mass: 0.2;
-  
-  /* Syntax Highlighting */
+
+  /* Syntax Highlighting (unchanged for now) */
   --sh-class: #7aa2f7;
   --sh-sign: #89ddff;
   --sh-string: #9ece6a;
@@ -85,25 +104,39 @@ html {
 }
 
 .dark {
-  --color-background: #09090b;
-  --color-foreground: #fafafa;
-  --color-muted: #262626;
-  --color-muted-foreground: #a1a1aa;
-  --color-popover: #09090b;
-  --color-popover-foreground: #fafafa;
-  --color-border: #27272a;
-  --color-input: #27272a;
-  --color-card: #09090b;
-  --color-card-foreground: #fafafa;
-  --color-primary: #fafafa;
-  --color-primary-foreground: #18181b;
-  --color-secondary: #262626;
-  --color-secondary-foreground: #fafafa;
-  --color-accent: #262626;
-  --color-accent-foreground: #fafafa;
-  --color-destructive: #7f1d1d;
-  --color-destructive-foreground: #fafafa;
-  --color-ring: #d4d4d8;
+  --color-background: #282828;
+  --color-foreground: #ebdbb2;
+  --color-card: #3c3836;
+  --color-card-foreground: #ebdbb2;
+  --color-popover: #3c3836;
+  --color-popover-foreground: #ebdbb2;
+  --color-primary: #b8bb26;
+  --color-primary-foreground: #282828;
+  --color-secondary: #665c54;
+  --color-secondary-foreground: #ebdbb2;
+  --color-muted: #3c3836;
+  --color-muted-foreground: #a89984;
+  --color-accent: #83a598;
+  --color-accent-foreground: #282828;
+  --color-destructive: #fb4934;
+  --color-destructive-foreground: #282828;
+  --color-border: #665c54;
+  --color-input: #665c54;
+  --color-ring: #b8bb26;
+  /* Chart & Sidebar (optional, not mapped to classes yet) */
+  --color-chart-1: #928374;
+  --color-chart-2: #d3869b;
+  --color-chart-3: #8ec07c;
+  --color-chart-4: #fabd2f;
+  --color-chart-5: #b8bb26;
+  --color-sidebar: #3c3836;
+  --color-sidebar-foreground: #ebdbb2;
+  --color-sidebar-primary: #b8bb26;
+  --color-sidebar-primary-foreground: #282828;
+  --color-sidebar-accent: #83a598;
+  --color-sidebar-accent-foreground: #282828;
+  --color-sidebar-border: #665c54;
+  --color-sidebar-ring: #b8bb26;
 }
 
 /* Utility Classes */

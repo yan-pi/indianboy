@@ -3,17 +3,28 @@ import { motion } from 'motion/react'
 import { MagneticSocialLink } from './magnetic-social-link'
 import { ConnectSectionProps } from '@/lib/types'
 
-export function ConnectSection({ email, socialLinks, variants, transition, className }: ConnectSectionProps) {
+export function ConnectSection({
+  email,
+  socialLinks,
+  variants,
+  transition,
+  className,
+}: ConnectSectionProps) {
   return (
     <motion.section
       className={className}
       variants={variants}
       transition={transition}
     >
-      <h3 className="mb-5 text-lg font-medium theme-text-foreground">Connect</h3>
-      <p className="mb-5 theme-text-muted">
+      <h3 className="theme-text-foreground mb-5 text-lg font-medium">
+        Connect
+      </h3>
+      <p className="theme-text-muted mb-5">
         Feel free to contact me at{' '}
-        <a className="underline dark:text-zinc-300" href={`mailto:${email}`}>
+        <a
+          className="text-[color:var(--color-foreground)] underline"
+          href={`mailto:${email}`}
+        >
           {email}
         </a>
       </p>
@@ -27,4 +38,3 @@ export function ConnectSection({ email, socialLinks, variants, transition, class
     </motion.section>
   )
 }
-

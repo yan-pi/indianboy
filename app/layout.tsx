@@ -15,14 +15,15 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://nim-fawn.vercel.app/'),
   alternates: {
-    canonical: '/'
+    canonical: '/',
   },
   title: {
     default: 'Nim - Personal website template',
-    template: '%s | Nim'
+    template: '%s | Nim',
   },
-  description:  'Nim is a free and open-source personal website template built with Next.js 15, React 19 and Motion-Primitives.',
-};
+  description:
+    'Nim is a free and open-source personal website template built with Next.js 15, React 19 and Motion-Primitives.',
+}
 
 const geist = Geist({
   variable: '--font-geist',
@@ -42,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geist.variable} ${geistMono.variable} bg-white tracking-tight antialiased dark:bg-zinc-950`}
+        className={`${geist.variable} ${geistMono.variable} bg-[color:var(--color-background)] tracking-tight antialiased`}
       >
         <ThemeProvider
           enableSystem={true}
