@@ -7,11 +7,11 @@ export function Header() {
     <header className="mb-8 flex items-center justify-between">
       <div>
         <div className="mb-1 flex items-center space-x-2">
-          <Link href="/" className="theme-text-foreground font-medium">
+          <Link href="/" className="theme-text-foreground text-xl font-medium">
             Yan Fernandes
           </Link>
 
-          <span className="font-serif text-xl text-[var(--color-muted-foreground)] italic">
+          <span className="font-serif text-lg text-[var(--color-muted-foreground)] italic">
             aka indianboy
           </span>
         </div>
