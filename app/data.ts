@@ -22,11 +22,11 @@ export const PROJECTS: Project[] = [
 
 export const WORK_EXPERIENCE: WorkExperience[] = [
   {
-    company: 'Reglazed Studio',
-    title: 'CEO',
-    start: '2024',
+    company: 'Sats Capital',
+    title: 'Staff Software Engineer',
+    start: '2022',
     end: 'Present',
-    link: 'https://ibelick.com',
+    link: 'https://satscapital.com.br',
     id: 'work1',
   },
   {
@@ -70,7 +70,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     title: 'How to Export Metadata from MDX for Next.js SEO',
-    description: 'A guide on exporting metadata from MDX files to leverage Next.js SEO features.',
+    description:
+      'A guide on exporting metadata from MDX files to leverage Next.js SEO features.',
     link: '/blog/example-mdx-metadata',
     uid: 'blog-4',
   },
@@ -95,4 +96,6 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
 ]
 
-export const EMAIL = 'your@email.com'
+// export const EMAIL = 'yanfernandes404@gmail.com'
+
+export const EMAIL = 'yan@indianboy.sh'

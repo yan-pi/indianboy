@@ -22,7 +22,7 @@
 
 /* Theme Variables */
 html {
-  font-size: 110%; /* 110% of browser default (typically 17.6px) */
+  font-size: 120%; /* 110% of browser default (typically 17.6px) */
 }
 
 :root {
@@ -62,9 +62,14 @@ html {
   --color-sidebar-ring: #b8bb26;
 
   /* Fonts */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
 
   /* Border Radius */
   --border-radius: 0.5rem;
@@ -72,9 +77,9 @@ html {
   --border-radius-xl: 1rem;
 
   /* Shadows */
-  --shadow-sm: 0 0 0 0 hsl(0 0% 0% / 0.00), 0 1px 2px -1px hsl(0 0% 0% / 0.00);
-  --shadow-md: 0 0 0 0 hsl(0 0% 0% / 0.00), 0 2px 4px -1px hsl(0 0% 0% / 0.00);
-  --shadow-lg: 0 0 0 0 hsl(0 0% 0% / 0.00), 0 4px 6px -1px hsl(0 0% 0% / 0.00);
+  --shadow-sm: 0 0 0 0 hsl(0 0% 0% / 0), 0 1px 2px -1px hsl(0 0% 0% / 0);
+  --shadow-md: 0 0 0 0 hsl(0 0% 0% / 0), 0 2px 4px -1px hsl(0 0% 0% / 0);
+  --shadow-lg: 0 0 0 0 hsl(0 0% 0% / 0), 0 4px 6px -1px hsl(0 0% 0% / 0);
 
   /* Spacing */
   --spacing-section: 6rem;
@@ -92,15 +97,15 @@ html {
   --animation-spring-damping: 4.1;
   --animation-spring-mass: 0.2;
 
-  /* Syntax Highlighting (unchanged for now) */
-  --sh-class: #7aa2f7;
-  --sh-sign: #89ddff;
-  --sh-string: #9ece6a;
-  --sh-keyword: #bb9af7;
-  --sh-comment: #565f89;
-  --sh-jsxliterals: #7aa2f7;
-  --sh-property: #73daca;
-  --sh-entity: #e0af68;
+  /* Syntax Highlighting (Gruvbox-inspired) */
+  --sh-class: #fabd2f;
+  --sh-sign: #b8bb26;
+  --sh-string: #b8bb26;
+  --sh-keyword: #fb4934;
+  --sh-comment: #928374;
+  --sh-jsxliterals: #d3869b;
+  --sh-property: #8ec07c;
+  --sh-entity: #83a598;
 }
 
 .dark {
@@ -145,39 +150,39 @@ html {
     background-color: var(--color-card);
     border: 1px solid var(--color-border);
   }
-  
+
   .theme-bg-muted {
     background-color: var(--color-muted);
   }
-  
+
   .theme-text-foreground {
     color: var(--color-foreground);
   }
-  
+
   .theme-text-muted {
     color: var(--color-muted-foreground);
   }
-  
+
   .theme-border {
     border-color: var(--color-border);
   }
-  
+
   .theme-shadow-card {
     box-shadow: var(--shadow-md);
   }
-  
+
   .theme-transition {
     transition-duration: var(--transition-normal);
   }
-  
+
   .theme-border-radius {
     border-radius: var(--border-radius);
   }
-  
+
   .theme-border-radius-lg {
     border-radius: var(--border-radius-lg);
   }
-  
+
   .theme-border-radius-xl {
     border-radius: var(--border-radius-xl);
   }

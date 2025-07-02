@@ -37,7 +37,7 @@ function ThemeSwitch() {
 
   return (
     <AnimatedBackground
-      className="pointer-events-none theme-border-radius theme-bg-muted"
+      className="theme-border-radius theme-bg-muted pointer-events-none"
       defaultValue={theme}
       transition={{
         type: 'spring',
@@ -53,7 +53,7 @@ function ThemeSwitch() {
         return (
           <button
             key={theme.id}
-            className="inline-flex h-7 w-7 items-center justify-center text-zinc-500 transition-colors duration-100 focus-visible:outline-2 data-[checked=true]:text-zinc-950 dark:text-zinc-400 dark:data-[checked=true]:text-zinc-50"
+            className="inline-flex h-7 w-7 items-center justify-center text-[var(--color-muted-foreground)] transition-colors duration-100 focus-visible:outline-2 data-[checked=true]:text-[var(--color-foreground)]"
             type="button"
             aria-label={`Switch to ${theme.label} theme`}
             data-id={theme.id}
@@ -68,15 +68,18 @@ function ThemeSwitch() {
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-zinc-100 px-0 py-4 dark:border-zinc-800">
+    <footer
+      className="mt-24 border-t px-0 py-4"
+      style={{ borderColor: 'var(--color-border)' }}
+    >
       <div className="flex items-center justify-between">
         <a href="https://github.com/ibelick/nim" target="_blank">
-          <TextLoop className="text-xs text-zinc-500">
-            <span>© 2024 Nim.</span>
-            <span>Built with Motion-Primitives.</span>
+          <TextLoop className="text-xs text-[var(--color-muted-foreground)]">
+            <span>© 2025 Yan Fernandes.</span>
+            <span>I use Arch and Neovim btw.</span>
           </TextLoop>
         </a>
-        <div className="text-xs text-zinc-400">
+        <div className="text-xs text-[var(--color-muted-foreground)]">
           <ThemeSwitch />
         </div>
       </div>

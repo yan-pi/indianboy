@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   title: {
-    default: 'Nim - Personal website template',
+    default: 'Yan - Personal website',
     template: '%s | Nim',
   },
   description:
