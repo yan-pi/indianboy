@@ -46,7 +46,7 @@ export default function LayoutBlogPost({
       <div className="absolute top-24 right-4">
         <CopyButton />
       </div>
-      <main className="prose prose-gray prose-h4:prose-base dark:prose-invert prose-h1:text-xl prose-h1:font-medium prose-h2:mt-12 prose-h2:scroll-m-20 prose-h2:text-lg prose-h2:font-medium prose-h3:text-base prose-h3:font-medium prose-h4:font-medium prose-h5:text-base prose-h5:font-medium prose-h6:text-base prose-h6:font-medium prose-strong:font-medium mt-24 pb-20">
+      <main className="prose max-w-none prose-h4:prose-base prose-h1:text-xl prose-h1:font-medium prose-h2:mt-12 prose-h2:scroll-m-20 prose-h2:text-lg prose-h2:font-medium prose-h3:text-base prose-h3:font-medium prose-h4:font-medium prose-h5:text-base prose-h5:font-medium prose-h6:text-base prose-h6:font-medium prose-strong:font-medium mt-24 pb-20 prose-headings:text-[var(--color-foreground)] prose-p:text-[var(--color-foreground)] prose-li:text-[var(--color-foreground)] prose-strong:text-[var(--color-foreground)] prose-em:text-[var(--color-muted-foreground)] prose-blockquote:text-[var(--color-muted-foreground)] prose-blockquote:border-[var(--color-border)] prose-code:text-[var(--color-accent)] prose-code:bg-[var(--color-muted)] prose-pre:bg-[var(--color-card)] prose-pre:border prose-pre:border-[var(--color-border)] prose-a:text-[var(--color-primary)] prose-a:no-underline hover:prose-a:text-[var(--color-accent)] prose-a:transition-colors">
         {children}
       </main>
     </>
