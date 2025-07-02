@@ -37,7 +37,7 @@ function ThemeSwitch() {
 
   return (
     <AnimatedBackground
-      className="pointer-events-none rounded-lg bg-zinc-100 dark:bg-zinc-800"
+      className="pointer-events-none theme-border-radius theme-bg-muted"
       defaultValue={theme}
       transition={{
         type: 'spring',

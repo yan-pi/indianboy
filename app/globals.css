@@ -20,7 +20,56 @@
   }
 }
 
+/* Theme Variables */
 :root {
+  /* Colors */
+  --color-background: white;
+  --color-foreground: #09090b;
+  --color-muted: #f4f4f5;
+  --color-muted-foreground: #71717a;
+  --color-popover: white;
+  --color-popover-foreground: #09090b;
+  --color-border: #e4e4e7;
+  --color-input: #e4e4e7;
+  --color-card: white;
+  --color-card-foreground: #09090b;
+  --color-primary: #18181b;
+  --color-primary-foreground: #fafafa;
+  --color-secondary: #f4f4f5;
+  --color-secondary-foreground: #18181b;
+  --color-accent: #f4f4f5;
+  --color-accent-foreground: #18181b;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #fafafa;
+  --color-ring: #18181b;
+  
+  /* Spacing */
+  --spacing-section: 6rem;
+  --spacing-card: 1rem;
+  --spacing-element: 1.25rem;
+  
+  /* Borders */
+  --border-radius: 0.75rem;
+  --border-radius-lg: 1rem;
+  --border-radius-xl: 1.5rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  /* Transitions */
+  --transition-fast: 150ms;
+  --transition-normal: 200ms;
+  --transition-slow: 300ms;
+  
+  /* Animation Configs */
+  --animation-spring-bounce: 0.2;
+  --animation-spring-stiffness: 26.7;
+  --animation-spring-damping: 4.1;
+  --animation-spring-mass: 0.2;
+  
+  /* Syntax Highlighting */
   --sh-class: #7aa2f7;
   --sh-sign: #89ddff;
   --sh-string: #9ece6a;
@@ -29,4 +78,70 @@
   --sh-jsxliterals: #7aa2f7;
   --sh-property: #73daca;
   --sh-entity: #e0af68;
+}
+
+.dark {
+  --color-background: #09090b;
+  --color-foreground: #fafafa;
+  --color-muted: #262626;
+  --color-muted-foreground: #a1a1aa;
+  --color-popover: #09090b;
+  --color-popover-foreground: #fafafa;
+  --color-border: #27272a;
+  --color-input: #27272a;
+  --color-card: #09090b;
+  --color-card-foreground: #fafafa;
+  --color-primary: #fafafa;
+  --color-primary-foreground: #18181b;
+  --color-secondary: #262626;
+  --color-secondary-foreground: #fafafa;
+  --color-accent: #262626;
+  --color-accent-foreground: #fafafa;
+  --color-destructive: #7f1d1d;
+  --color-destructive-foreground: #fafafa;
+  --color-ring: #d4d4d8;
+}
+
+/* Utility Classes */
+@layer utilities {
+  .theme-bg-card {
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+  }
+  
+  .theme-bg-muted {
+    background-color: var(--color-muted);
+  }
+  
+  .theme-text-foreground {
+    color: var(--color-foreground);
+  }
+  
+  .theme-text-muted {
+    color: var(--color-muted-foreground);
+  }
+  
+  .theme-border {
+    border-color: var(--color-border);
+  }
+  
+  .theme-shadow-card {
+    box-shadow: var(--shadow-md);
+  }
+  
+  .theme-transition {
+    transition-duration: var(--transition-normal);
+  }
+  
+  .theme-border-radius {
+    border-radius: var(--border-radius);
+  }
+  
+  .theme-border-radius-lg {
+    border-radius: var(--border-radius-lg);
+  }
+  
+  .theme-border-radius-xl {
+    border-radius: var(--border-radius-xl);
+  }
 }
