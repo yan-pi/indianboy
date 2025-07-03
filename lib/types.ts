@@ -27,6 +27,13 @@ export interface BlogPost {
   description: string
   link: string
   uid: string
+  slug: string
+  publishedAt: string
+  summary?: string
+  tags?: string[]
+  author?: string
+  image?: string
+  readingTime?: string
 }
 
 export interface SocialLink {
