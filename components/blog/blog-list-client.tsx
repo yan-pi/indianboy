@@ -11,20 +11,36 @@ interface BlogListClientProps {
 
 export function BlogListClient({ initialPosts, tags }: BlogListClientProps) {
   const [posts, setPosts] = useState<BlogPost[]>(initialPosts)
-  const [selectedTag, setSelectedTag] = useState<string>('')
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
+  const [isFilterCollapsed, setIsFilterCollapsed] = useState<boolean>(true)
 
   const handleTagFilter = (tag: string) => {
-    const newTag = tag === selectedTag ? '' : tag
-    setSelectedTag(newTag)
+    let newSelectedTags: string[]
 
-    if (newTag) {
+    if (selectedTags.includes(tag)) {
+      // Remove the tag if it's already selected
+      newSelectedTags = selectedTags.filter((t) => t !== tag)
+    } else {
+      // Add the tag if it's not selected
+      newSelectedTags = [...selectedTags, tag]
+    }
+
+    setSelectedTags(newSelectedTags)
+
+    if (newSelectedTags.length > 0) {
+      // Filter posts that have at least one of the selected tags (OR logic)
       const filteredPosts = initialPosts.filter((post) =>
-        post.tags?.includes(newTag),
+        post.tags?.some((postTag) => newSelectedTags.includes(postTag)),
       )
       setPosts(filteredPosts)
     } else {
       setPosts(initialPosts)
     }
+  }
+
+  const clearAllTags = () => {
+    setSelectedTags([])
+    setPosts(initialPosts)
   }
 
   return (
@@ -35,46 +51,59 @@ export function BlogListClient({ initialPosts, tags }: BlogListClientProps) {
         </h1>
         <p className="theme-text-muted text-lg">
           Explore all {posts.length} blog posts
-          {selectedTag && ` tagged with "${selectedTag}"`}
+          {selectedTags.length > 0 &&
+            ` filtered by ${selectedTags.length} tag${selectedTags.length > 1 ? 's' : ''}`}
         </p>
       </header>
 
       {/* Tag Filter */}
       {tags.length > 0 && (
         <div className="mb-8">
-          <h2 className="theme-text-foreground mb-4 text-lg font-semibold">
-            Filter by Tag
-          </h2>
-          <div className="flex flex-wrap gap-2">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="theme-text-foreground text-lg font-semibold">
+              Filter by Tag
+            </h2>
             <button
-              onClick={() => handleTagFilter('')}
-              className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
-                !selectedTag
-                  ? 'bg-[var(--color-primary)] text-white'
-                  : 'theme-bg-muted theme-text-muted hover:theme-bg-hover'
-              }`}
+              onClick={() => setIsFilterCollapsed((prev) => !prev)}
+              className="theme-bg-muted theme-text-muted hover:theme-bg-hover mt-4 ml-2 rounded px-2 py-1 text-xs transition-colors"
+              aria-expanded={!isFilterCollapsed}
+              aria-controls="tag-filter-section"
             >
-              All ({initialPosts.length})
+              {isFilterCollapsed ? 'Show' : 'Hide'}
             </button>
-            {tags.map((tag) => {
-              const tagCount = initialPosts.filter((post) =>
-                post.tags?.includes(tag),
-              ).length
-              return (
-                <button
-                  key={tag}
-                  onClick={() => handleTagFilter(tag)}
-                  className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
-                    selectedTag === tag
-                      ? 'bg-[var(--color-primary)] text-white'
-                      : 'theme-bg-muted theme-text-muted hover:theme-bg-hover'
-                  }`}
-                >
-                  {tag} ({tagCount})
-                </button>
-              )
-            })}
           </div>
+          {!isFilterCollapsed && (
+            <div id="tag-filter-section" className="flex flex-wrap gap-2">
+              <button
+                onClick={clearAllTags}
+                className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
+                  selectedTags.length === 0
+                    ? 'bg-[var(--color-primary)] text-white'
+                    : 'theme-bg-muted theme-text-muted hover:theme-bg-hover'
+                }`}
+              >
+                All ({initialPosts.length})
+              </button>
+              {tags.map((tag) => {
+                const tagCount = initialPosts.filter((post) =>
+                  post.tags?.includes(tag),
+                ).length
+                return (
+                  <button
+                    key={tag}
+                    onClick={() => handleTagFilter(tag)}
+                    className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
+                      selectedTags.includes(tag)
+                        ? 'bg-[var(--color-primary)] text-white'
+                        : 'theme-bg-muted theme-text-muted hover:theme-bg-hover'
+                    }`}
+                  >
+                    {tag} ({tagCount})
+                  </button>
+                )
+              })}
+            </div>
+          )}
         </div>
       )}
 
@@ -83,8 +112,8 @@ export function BlogListClient({ initialPosts, tags }: BlogListClientProps) {
         {posts.length === 0 ? (
           <div className="py-12 text-center">
             <p className="theme-text-muted text-lg">
-              {selectedTag
-                ? `No posts found with tag "${selectedTag}"`
+              {selectedTags.length > 0
+                ? `No posts found with the selected tag${selectedTags.length > 1 ? 's' : ''}`
                 : 'No blog posts found'}
             </p>
           </div>
@@ -96,14 +125,14 @@ export function BlogListClient({ initialPosts, tags }: BlogListClientProps) {
             >
               <div className="mb-4 flex items-start justify-between">
                 <div className="flex-1">
-                  <h2 className="theme-text-foreground text-xl font-semibold">
+                  <h1 className="theme-text-foreground mb-2 text-xl font-semibold">
                     <Link
                       href={post.link}
                       className="transition-colors hover:text-[var(--color-primary)]"
                     >
                       {post.title}
                     </Link>
-                  </h2>
+                  </h1>
                   <p className="theme-text-muted mb-3 text-sm">
                     {post.description}
                   </p>
