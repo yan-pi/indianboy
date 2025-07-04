@@ -1,0 +1,96 @@
+---
+title: 'Notes to use semantic release'
+description: 'Annotations from how to use and create a semantic release versioning'
+publishedAt: '2024-11-13'
+tags: ['Blog Post', 'Semantic Release']
+author: 'Yan Fernandes'
+summary: ''
+---
+
+## Introduction
+
+This document should serve as a basis for semantic versioning and releases used in FESF projects. However, it is important to note that semantic versioning is a practice that can be used in any project, regardless of size or complexity.
+
+## What is Semantic Versioning?
+
+> Semantic Versioning is a set of rules for keeping track of versions in code development. It is a general model that all users can understand and use.
+
+## Semantic Versioning Rules
+
+### Version Number Format
+
+The version number **MUST** follow the format `vX.Y.Z`, where:
+- **X** = major version
+- **Y** = minor version
+- **Z** = patch version
+
+Each part **MUST** increase numerically, with no leading zeros.
+
+### Types of Versions
+
+- **Patch Version (Z):** Incremented for backwards-compatible bug fixes.
+- **Minor Version (Y):** Incremented for new backwards-compatible features or deprecation of features.
+- **Major Version (X):** Incremented for changes that are not backwards-compatible.
+
+### Pre-release Versions
+
+May be indicated with a hyphen after the patch version, and have lower precedence than the normal version. **Examples:** `v1.0.0-alpha`, `v1.0.0-alpha.1`.
+
+### Build Metadata
+
+May be added after the version, preceded by a plus sign. Does not affect precedence. **Example:** `v1.0.0-alpha+001`.
+
+### Version Precedence
+
+Precedence **MUST** be calculated by comparing the version identifiers numerically (major, minor, patch, and pre-release). Pre-release versions have lower precedence than normal versions.
+
+**Examples:**
+- `v1.0.0 < 2.0.0`
+- `v1.0.0-alpha < 1.0.0`
+
+## Creating a New Release on GitHub
+
+### 1. Navigate to the Repository
+- On GitHub, go to the repository's `main page`.
+- To the right of the file list, click on `Releases`.
+
+### 2. Start a New Release
+- At the top of the page, click on `Draft a new release`.
+
+### 3. Choose a Tag for the Release
+- Click the `Choose a tag` dropdown:
+  - To use an `existing tag`, click the desired tag.
+  - To create a `new tag`, enter a version number for the release and click
+ `Create new tag`.
+- If you created a new tag, select the `Target` menu and click the branch that contains the project you want to release.
+
+### 4. Set the Previous Tag (Optional)
+- Above the description field, select the `Previous tag` dropdown and click the tag that identifies the previous release.
+
+### 5. Fill in the Release Title
+- In the `Release title` field, enter a title for your release.
+
+### 6. Generate Release Notes
+- Above the description field, click on `Generate release notes`.
+- Check the generated notes to ensure they include all (and only) the desired information.
+
+### 7. Include Binary Files (Optional)
+- To include binary files, such as compiled programs, drag and drop or manually select the files in the `binaries` box.
+
+### 8. If it is a Beta/Alpha version, mark as Pre-Release.
+- To notify users that the release is not ready for production and may be unstable, select `This is a pre-release`.
+
+### 9. Set as Latest Release (Optional)
+- Select `Set as latest release`. If not selected, the label will be assigned automatically based on semantic versioning.
+
+### 11. Publish or Save Release Draft
+- To publish your release, click on `Publish release`.
+- To work on the release later, click on `Save draft`.
+
+> **Note:** After saving or publishing, you can view your releases in the repository's release feed.
+
+## Bookmarks
+
+[Semantic Release](https://semantic-release.gitbook.io/semantic-release/)
+
+[Semantic Versioning](https://semver.org/)
