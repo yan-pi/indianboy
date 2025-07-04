@@ -16,10 +16,10 @@ export function BlogListClient({ initialPosts, tags }: BlogListClientProps) {
   const handleTagFilter = (tag: string) => {
     const newTag = tag === selectedTag ? '' : tag
     setSelectedTag(newTag)
-    
+
     if (newTag) {
-      const filteredPosts = initialPosts.filter(post => 
-        post.tags?.includes(newTag)
+      const filteredPosts = initialPosts.filter((post) =>
+        post.tags?.includes(newTag),
       )
       setPosts(filteredPosts)
     } else {
@@ -28,42 +28,45 @@ export function BlogListClient({ initialPosts, tags }: BlogListClientProps) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="mx-auto max-w-4xl px-4 py-8">
       <header className="mb-8">
-        <h1 className="theme-text-foreground text-3xl font-bold mb-4">
+        <h1 className="theme-text-foreground mb-4 text-3xl font-bold">
           All Blog Posts
         </h1>
         <p className="theme-text-muted text-lg">
-          Explore all {posts.length} blog posts{selectedTag && ` tagged with "${selectedTag}"`}
+          Explore all {posts.length} blog posts
+          {selectedTag && ` tagged with "${selectedTag}"`}
         </p>
       </header>
 
       {/* Tag Filter */}
       {tags.length > 0 && (
         <div className="mb-8">
-          <h2 className="theme-text-foreground text-lg font-semibold mb-4">
+          <h2 className="theme-text-foreground mb-4 text-lg font-semibold">
             Filter by Tag
           </h2>
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => handleTagFilter('')}
-              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+              className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
                 !selectedTag
-                  ? 'bg-blue-500 text-white'
+                  ? 'bg-[var(--color-primary)] text-white'
                   : 'theme-bg-muted theme-text-muted hover:theme-bg-hover'
               }`}
             >
               All ({initialPosts.length})
             </button>
             {tags.map((tag) => {
-              const tagCount = initialPosts.filter(post => post.tags?.includes(tag)).length
+              const tagCount = initialPosts.filter((post) =>
+                post.tags?.includes(tag),
+              ).length
               return (
                 <button
                   key={tag}
                   onClick={() => handleTagFilter(tag)}
-                  className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+                  className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
                     selectedTag === tag
-                      ? 'bg-blue-500 text-white'
+                      ? 'bg-[var(--color-primary)] text-white'
                       : 'theme-bg-muted theme-text-muted hover:theme-bg-hover'
                   }`}
                 >
@@ -78,35 +81,37 @@ export function BlogListClient({ initialPosts, tags }: BlogListClientProps) {
       {/* Blog Posts List */}
       <div className="space-y-6">
         {posts.length === 0 ? (
-          <div className="text-center py-12">
+          <div className="py-12 text-center">
             <p className="theme-text-muted text-lg">
-              {selectedTag ? `No posts found with tag "${selectedTag}"` : 'No blog posts found'}
+              {selectedTag
+                ? `No posts found with tag "${selectedTag}"`
+                : 'No blog posts found'}
             </p>
           </div>
         ) : (
           posts.map((post) => (
             <article
               key={post.slug}
-              className="theme-bg-card theme-border border rounded-lg p-6 hover:shadow-md transition-shadow"
+              className="theme-bg-card theme-border rounded-lg border p-6 transition-shadow hover:shadow-md"
             >
-              <div className="flex items-start justify-between mb-4">
+              <div className="mb-4 flex items-start justify-between">
                 <div className="flex-1">
-                  <h2 className="theme-text-foreground text-xl font-semibold mb-2">
+                  <h2 className="theme-text-foreground text-xl font-semibold">
                     <Link
                       href={post.link}
-                      className="hover:text-blue-500 transition-colors"
+                      className="transition-colors hover:text-[var(--color-primary)]"
                     >
                       {post.title}
                     </Link>
                   </h2>
-                  <p className="theme-text-muted text-sm mb-3">
+                  <p className="theme-text-muted mb-3 text-sm">
                     {post.description}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 text-sm theme-text-muted">
+                <div className="theme-text-muted flex items-center gap-4 text-sm">
                   <time dateTime={post.publishedAt}>
                     {new Date(post.publishedAt).toLocaleDateString('en-US', {
                       year: 'numeric',
@@ -130,12 +135,12 @@ export function BlogListClient({ initialPosts, tags }: BlogListClientProps) {
               </div>
 
               {post.tags && post.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-4">
+                <div className="mt-4 flex flex-wrap gap-2">
                   {post.tags.map((tag) => (
                     <button
                       key={tag}
                       onClick={() => handleTagFilter(tag)}
-                      className="theme-bg-muted theme-text-muted hover:theme-bg-hover px-2 py-1 rounded text-xs transition-colors"
+                      className="theme-bg-muted theme-text-muted hover:theme-bg-hover rounded px-2 py-1 text-xs transition-colors"
                     >
                       {tag}
                     </button>
@@ -159,4 +164,3 @@ export function BlogListClient({ initialPosts, tags }: BlogListClientProps) {
     </div>
   )
 }
-

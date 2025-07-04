@@ -5,7 +5,11 @@ import { ProjectsSection } from '@/components/home/projects-section'
 import { WorkExperienceSection } from '@/components/home/work-experience-section'
 import { BlogSection } from '@/components/home/blog-section'
 import { ConnectSection } from '@/components/home/connect-section'
-import { VARIANTS_CONTAINER, VARIANTS_SECTION, TRANSITION_SECTION } from '@/components/home/animations'
+import {
+  VARIANTS_CONTAINER,
+  VARIANTS_SECTION,
+  TRANSITION_SECTION,
+} from '@/components/home/animations'
 import type { Project, WorkExperience, BlogPost, SocialLink } from '@/lib/types'
 
 interface PersonalClientProps {
@@ -16,44 +20,44 @@ interface PersonalClientProps {
   socialLinks: SocialLink[]
 }
 
-export function PersonalClient({ 
-  projects, 
-  workExperience, 
-  blogPosts, 
-  email, 
-  socialLinks 
+export function PersonalClient({
+  projects,
+  workExperience,
+  blogPosts,
+  email,
+  socialLinks,
 }: PersonalClientProps) {
   return (
     <motion.main
-      className="space-y-24"
+      className="space-y-16 pb-16"
       variants={VARIANTS_CONTAINER}
       initial="hidden"
       animate="visible"
     >
-      <IntroSection 
+      <IntroSection
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
       />
 
-      <ProjectsSection 
+      <ProjectsSection
         projects={projects}
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
       />
 
-      <WorkExperienceSection 
+      <WorkExperienceSection
         workExperience={workExperience}
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
       />
 
-      <BlogSection 
+      <BlogSection
         blogPosts={blogPosts}
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
       />
 
-      <ConnectSection 
+      <ConnectSection
         email={email}
         socialLinks={socialLinks}
         variants={VARIANTS_SECTION}
@@ -62,4 +66,3 @@ export function PersonalClient({
     </motion.main>
   )
 }
-
