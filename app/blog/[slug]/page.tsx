@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const post = await getBlogPost(slug)
-  
+
   if (!post) {
     return {}
   }
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BlogPost({ params }: Props) {
   const { slug } = await params
   const post = await getBlogPost(slug)
-  
+
   if (!post) {
     notFound()
   }
@@ -62,10 +62,10 @@ export default async function BlogPost({ params }: Props) {
   return (
     <article className="max-w-none">
       <header className="mb-8 space-y-4">
-        <h1 className="text-3xl font-bold theme-text-foreground">
+        <h1 className="theme-text-foreground text-3xl font-bold">
           {post.title}
         </h1>
-        <div className="flex items-center gap-4 text-sm theme-text-muted">
+        <div className="theme-text-muted flex items-center gap-4 text-sm">
           <time dateTime={post.publishedAt}>
             {new Date(post.publishedAt).toLocaleDateString('en-US', {
               year: 'numeric',
@@ -79,19 +79,19 @@ export default async function BlogPost({ params }: Props) {
               <span>{post.readingTime}</span>
             </>
           )}
-          {post.author && (
-            <>
-              <span>•</span>
-              <span>by {post.author}</span>
-            </>
-          )}
+          {/* {post.author && ( */}
+          {/*   <> */}
+          {/*     <span>•</span> */}
+          {/*     <span>by {post.author}</span> */}
+          {/*   </> */}
+          {/* )} */}
         </div>
         {post.tags && post.tags.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-2 py-1 text-xs theme-bg-muted theme-text-muted theme-border-radius"
+                className="theme-bg-muted theme-text-muted theme-border-radius px-2 py-1 text-xs"
               >
                 {tag}
               </span>
@@ -99,11 +99,10 @@ export default async function BlogPost({ params }: Props) {
           </div>
         )}
       </header>
-      
+
       <div className="prose prose-neutral dark:prose-invert max-w-none">
         <MDXRemote source={content} />
       </div>
     </article>
   )
 }
-

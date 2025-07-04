@@ -11,7 +11,15 @@ export function BlogSection({ blogPosts, variants, transition, className }: Blog
       variants={variants}
       transition={transition}
     >
-      <h3 className="mb-3 text-lg font-medium theme-text-foreground">Blog</h3>
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-lg font-medium theme-text-foreground">Blog</h3>
+        <Link 
+          href="/blog"
+          className="text-sm theme-text-muted hover:theme-text-foreground transition-colors"
+        >
+          View all →
+        </Link>
+      </div>
       <div className="flex flex-col space-y-0">
         <AnimatedBackground
           enableHover

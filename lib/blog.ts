@@ -153,3 +153,45 @@ export function generateRSSFeed(blogPosts: BlogPost[], siteUrl: string): string 
 </rss>`
 }
 
+// Get the latest blog posts (default 3)
+export async function getLatestBlogPosts(limit: number = 3): Promise<BlogPost[]> {
+  const posts = await getBlogPosts()
+  return posts.slice(0, limit)
+}
+
+// Get all unique tags from all blog posts
+export async function getAllTags(): Promise<string[]> {
+  const posts = await getBlogPosts()
+  const allTags = posts.flatMap(post => post.tags || [])
+  return Array.from(new Set(allTags)).sort()
+}
+
+// Filter blog posts by tag
+export async function getBlogPostsByTag(tag: string): Promise<BlogPost[]> {
+  const posts = await getBlogPosts()
+  return posts.filter(post => post.tags?.includes(tag))
+}
+
+// Get blog posts with pagination
+export async function getBlogPostsPaginated(page: number = 1, limit: number = 10): Promise<{
+  posts: BlogPost[]
+  totalPages: number
+  currentPage: number
+  hasNext: boolean
+  hasPrev: boolean
+}> {
+  const allPosts = await getBlogPosts()
+  const startIndex = (page - 1) * limit
+  const endIndex = startIndex + limit
+  const posts = allPosts.slice(startIndex, endIndex)
+  const totalPages = Math.ceil(allPosts.length / limit)
+  
+  return {
+    posts,
+    totalPages,
+    currentPage: page,
+    hasNext: page < totalPages,
+    hasPrev: page > 1
+  }
+}
+

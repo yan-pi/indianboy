@@ -1,5 +1,5 @@
 import { Project, WorkExperience, SocialLink } from '@/lib/types'
-import { getBlogPosts } from '@/lib/blog'
+import { getBlogPosts, getLatestBlogPosts } from '@/lib/blog'
 
 export const PROJECTS: Project[] = [
   {
@@ -51,7 +51,7 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
 // Blog posts are now automatically loaded from the filesystem
 // Note: getBlogPosts() is an async function that can only be used in server components
 // For static usage, you'll need to await getBlogPosts() in your server components
-export { getBlogPosts as BLOG_POSTS }
+export { getBlogPosts as BLOG_POSTS, getLatestBlogPosts as LATEST_BLOG_POSTS }
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
