@@ -39,11 +39,11 @@ export function PersonalClient({
         transition={TRANSITION_SECTION}
       />
 
-      <ProjectsSection
-        projects={projects}
-        variants={VARIANTS_SECTION}
-        transition={TRANSITION_SECTION}
-      />
+      {/* <ProjectsSection */}
+      {/*   projects={projects} */}
+      {/*   variants={VARIANTS_SECTION} */}
+      {/*   transition={TRANSITION_SECTION} */}
+      {/* /> */}
 
       <WorkExperienceSection
         workExperience={workExperience}
