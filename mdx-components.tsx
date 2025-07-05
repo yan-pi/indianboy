@@ -1,6 +1,8 @@
-import type { MDXComponents } from 'mdx/types'
-import { ComponentPropsWithoutRef } from 'react'
-import { highlight } from 'sugar-high'
+import type { MDXComponents } from 'mdx/types';
+import { ComponentPropsWithoutRef } from 'react';
+import { highlight } from 'sugar-high';
+import Image from './components/Image';
+import Mermaid from './components/Mermaid';
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {

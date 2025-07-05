@@ -186,4 +186,31 @@ html {
   .theme-border-radius-xl {
     border-radius: var(--border-radius-xl);
   }
+
+/* MDX Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 1rem;
+  background: var(--color-card);
+  color: var(--color-foreground);
+}
+th, td {
+  border: 1px solid var(--color-border);
+  padding: 0.75em 1em;
+  text-align: left;
+}
+th {
+  background: var(--color-muted);
+  color: var(--color-foreground);
+}
+tr:nth-child(even) {
+  background: var(--color-muted);
+}
+tr:hover {
+  background: var(--color-accent);
+  color: var(--color-accent-foreground);
+}
+
 }
