@@ -20,13 +20,197 @@
   }
 }
 
+/* Theme Variables */
+html {
+  font-size: 120%; /* 110% of browser default (typically 17.6px) */
+}
+
 :root {
-  --sh-class: #7aa2f7;
-  --sh-sign: #89ddff;
-  --sh-string: #9ece6a;
-  --sh-keyword: #bb9af7;
-  --sh-comment: #565f89;
-  --sh-jsxliterals: #7aa2f7;
-  --sh-property: #73daca;
-  --sh-entity: #e0af68;
+  /* Gruvbox-inspired Theme Colors */
+  --color-background: #fbf1c7;
+  --color-foreground: #3c3836;
+  --color-card: #f9f5d7;
+  --color-card-foreground: #3c3836;
+  --color-popover: #f9f5d7;
+  --color-popover-foreground: #3c3836;
+  --color-primary: #b8bb26;
+  --color-primary-foreground: #282828;
+  --color-secondary: #d5c4a1;
+  --color-secondary-foreground: #3c3836;
+  --color-muted: #f2e5bc;
+  --color-muted-foreground: #7c6f64;
+  --color-accent: #83a598;
+  --color-accent-foreground: #fbf1c7;
+  --color-destructive: #fb4934;
+  --color-destructive-foreground: #fbf1c7;
+  --color-border: #d5c4a1;
+  --color-input: #d5c4a1;
+  --color-ring: #b8bb26;
+  /* Chart & Sidebar (optional, not mapped to classes yet) */
+  --color-chart-1: #928374;
+  --color-chart-2: #d3869b;
+  --color-chart-3: #8ec07c;
+  --color-chart-4: #fabd2f;
+  --color-chart-5: #b8bb26;
+  --color-sidebar: #f9f5d7;
+  --color-sidebar-foreground: #3c3836;
+  --color-sidebar-primary: #b8bb26;
+  --color-sidebar-primary-foreground: #282828;
+  --color-sidebar-accent: #83a598;
+  --color-sidebar-accent-foreground: #fbf1c7;
+  --color-sidebar-border: #d5c4a1;
+  --color-sidebar-ring: #b8bb26;
+
+  /* Fonts */
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+
+  /* Border Radius */
+  --border-radius: 0.5rem;
+  --border-radius-lg: 0.5rem;
+  --border-radius-xl: 1rem;
+
+  /* Shadows */
+  --shadow-sm: 0 0 0 0 hsl(0 0% 0% / 0), 0 1px 2px -1px hsl(0 0% 0% / 0);
+  --shadow-md: 0 0 0 0 hsl(0 0% 0% / 0), 0 2px 4px -1px hsl(0 0% 0% / 0);
+  --shadow-lg: 0 0 0 0 hsl(0 0% 0% / 0), 0 4px 6px -1px hsl(0 0% 0% / 0);
+
+  /* Spacing */
+  --spacing-section: 6rem;
+  --spacing-card: 1rem;
+  --spacing-element: 1.25rem;
+
+  /* Transitions */
+  --transition-fast: 150ms;
+  --transition-normal: 200ms;
+  --transition-slow: 300ms;
+
+  /* Animation Configs */
+  --animation-spring-bounce: 0.2;
+  --animation-spring-stiffness: 26.7;
+  --animation-spring-damping: 4.1;
+  --animation-spring-mass: 0.2;
+
+  /* Syntax Highlighting (Gruvbox-inspired) */
+  --sh-class: #fabd2f;
+  --sh-sign: #b8bb26;
+  --sh-string: #b8bb26;
+  --sh-keyword: #fb4934;
+  --sh-comment: #928374;
+  --sh-jsxliterals: #d3869b;
+  --sh-property: #8ec07c;
+  --sh-entity: #83a598;
+}
+
+.dark {
+  --color-background: #282828;
+  --color-foreground: #ebdbb2;
+  --color-card: #3c3836;
+  --color-card-foreground: #ebdbb2;
+  --color-popover: #3c3836;
+  --color-popover-foreground: #ebdbb2;
+  --color-primary: #b8bb26;
+  --color-primary-foreground: #282828;
+  --color-secondary: #665c54;
+  --color-secondary-foreground: #ebdbb2;
+  --color-muted: #3c3836;
+  --color-muted-foreground: #a89984;
+  --color-accent: #83a598;
+  --color-accent-foreground: #282828;
+  --color-destructive: #fb4934;
+  --color-destructive-foreground: #282828;
+  --color-border: #665c54;
+  --color-input: #665c54;
+  --color-ring: #b8bb26;
+  /* Chart & Sidebar (optional, not mapped to classes yet) */
+  --color-chart-1: #928374;
+  --color-chart-2: #d3869b;
+  --color-chart-3: #8ec07c;
+  --color-chart-4: #fabd2f;
+  --color-chart-5: #b8bb26;
+  --color-sidebar: #3c3836;
+  --color-sidebar-foreground: #ebdbb2;
+  --color-sidebar-primary: #b8bb26;
+  --color-sidebar-primary-foreground: #282828;
+  --color-sidebar-accent: #83a598;
+  --color-sidebar-accent-foreground: #282828;
+  --color-sidebar-border: #665c54;
+  --color-sidebar-ring: #b8bb26;
+}
+
+/* Utility Classes */
+@layer utilities {
+  .theme-bg-card {
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+  }
+
+  .theme-bg-muted {
+    background-color: var(--color-muted);
+  }
+
+  .theme-text-foreground {
+    color: var(--color-foreground);
+  }
+
+  .theme-text-muted {
+    color: var(--color-muted-foreground);
+  }
+
+  .theme-border {
+    border-color: var(--color-border);
+  }
+
+  .theme-shadow-card {
+    box-shadow: var(--shadow-md);
+  }
+
+  .theme-transition {
+    transition-duration: var(--transition-normal);
+  }
+
+  .theme-border-radius {
+    border-radius: var(--border-radius);
+  }
+
+  .theme-border-radius-lg {
+    border-radius: var(--border-radius-lg);
+  }
+
+  .theme-border-radius-xl {
+    border-radius: var(--border-radius-xl);
+  }
+
+/* MDX Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 1rem;
+  background: var(--color-card);
+  color: var(--color-foreground);
+}
+th, td {
+  border: 1px solid var(--color-border);
+  padding: 0.75em 1em;
+  text-align: left;
+}
+th {
+  background: var(--color-muted);
+  color: var(--color-foreground);
+}
+tr:nth-child(even) {
+  background: var(--color-muted);
+}
+tr:hover {
+  background: var(--color-accent);
+  color: var(--color-accent-foreground);
+}
+
 }

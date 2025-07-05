@@ -1,38 +1,12 @@
-type Project = {
-  name: string
-  description: string
-  link: string
-  video: string
-  id: string
-}
-
-type WorkExperience = {
-  company: string
-  title: string
-  start: string
-  end: string
-  link: string
-  id: string
-}
-
-type BlogPost = {
-  title: string
-  description: string
-  link: string
-  uid: string
-}
-
-type SocialLink = {
-  label: string
-  link: string
-}
+import { Project, WorkExperience, SocialLink } from '@/lib/types'
+import { getBlogPosts, getLatestBlogPosts } from '@/lib/blog'
 
 export const PROJECTS: Project[] = [
   {
-    name: 'Motion Primitives Pro',
+    name: 'Sats Capital',
     description:
-      'Advanced components and templates to craft beautiful websites.',
-    link: 'https://pro.motion-primitives.com/',
+      'A Bitcoin investment platform that uses cashback to help users invest in Bitcoin through a simple and intuitive interface.',
+    link: 'https://satscapital.com.br/',
     video:
       'https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/newProfileItem/d898be8a-7037-4c71-af0c-8997239b050d.mp4?_a=DATAdtAAZAA0',
     id: 'project1',
@@ -49,77 +23,55 @@ export const PROJECTS: Project[] = [
 
 export const WORK_EXPERIENCE: WorkExperience[] = [
   {
-    company: 'Reglazed Studio',
-    title: 'CEO',
-    start: '2024',
+    company: 'Sats Capital',
+    title: 'Tech Lead',
+    start: '2023',
     end: 'Present',
-    link: 'https://ibelick.com',
+    link: 'https://satscapital.com.br',
     id: 'work1',
   },
   {
-    company: 'Freelance',
-    title: 'Design Engineer',
-    start: '2022',
-    end: '2024',
-    link: 'https://ibelick.com',
+    company: 'FESF/SUS (Brazilian Health System)',
+    title: 'Lead Front-end Engineer',
+    start: '2024',
+    end: '2025',
+    link: 'https://www.fesfsus.ba.gov.br/',
     id: 'work2',
   },
   {
-    company: 'Freelance',
-    title: 'Front-end Developer',
-    start: '2017',
-    end: 'Present',
-    link: 'https://ibelick.com',
+    company: 'Branef GovTech',
+    title: 'Front-end Intern',
+    start: '2022',
+    end: '2022',
+    link: 'https://branefgovtech.com.br/',
     id: 'work3',
   },
 ]
 
-export const BLOG_POSTS: BlogPost[] = [
-  {
-    title: 'Exploring the Intersection of Design, AI, and Design Engineering',
-    description: 'How AI is changing the way we design',
-    link: '/blog/exploring-the-intersection-of-design-ai-and-design-engineering',
-    uid: 'blog-1',
-  },
-  {
-    title: 'Why I left my job to start my own company',
-    description:
-      'A deep dive into my decision to leave my job and start my own company',
-    link: '/blog/exploring-the-intersection-of-design-ai-and-design-engineering',
-    uid: 'blog-2',
-  },
-  {
-    title: 'What I learned from my first year of freelancing',
-    description:
-      'A look back at my first year of freelancing and what I learned',
-    link: '/blog/exploring-the-intersection-of-design-ai-and-design-engineering',
-    uid: 'blog-3',
-  },
-  {
-    title: 'How to Export Metadata from MDX for Next.js SEO',
-    description: 'A guide on exporting metadata from MDX files to leverage Next.js SEO features.',
-    link: '/blog/example-mdx-metadata',
-    uid: 'blog-4',
-  },
-]
+// Blog posts are now automatically loaded from the filesystem
+// Note: getBlogPosts() is an async function that can only be used in server components
+// For static usage, you'll need to await getBlogPosts() in your server components
+export { getBlogPosts as BLOG_POSTS, getLatestBlogPosts as LATEST_BLOG_POSTS }
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     label: 'Github',
-    link: 'https://github.com/ibelick',
+    link: 'https://github.com/yan-pi',
   },
   {
     label: 'Twitter',
-    link: 'https://twitter.com/ibelick',
+    link: 'https://twitter.com/yamigake',
   },
   {
     label: 'LinkedIn',
-    link: 'https://www.linkedin.com/in/ibelick',
+    link: 'https://www.linkedin.com/in/yanfernandes/',
   },
   {
     label: 'Instagram',
-    link: 'https://www.instagram.com/ibelick',
+    link: 'https://www.instagram.com/yanfsb',
   },
 ]
 
-export const EMAIL = 'your@email.com'
+// export const EMAIL = 'yanfernandes404@gmail.com'
+
+export const EMAIL = 'yan@indianboy.sh'

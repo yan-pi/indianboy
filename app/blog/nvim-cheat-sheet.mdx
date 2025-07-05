@@ -1,0 +1,106 @@
+---
+title: 'Nvim cheat sheet'
+description: 'An useful cheat sheet for fast navigation in Neovim'
+publishedAt: '2024-11-14'
+tags: ['Zettelkasten', 'Neovim']
+author: 'Yan Fernandes'
+summary: 'A quick reference for efficient navigation and editing in Neovim.'
+---
+
+# 🚀 Quick Navigation Cheat Sheet for Neovim
+
+Learn the main commands to navigate Neovim quickly and efficiently. This guide covers movement, quick editing, window management, and more.
+
+## 🎯 Basic Movement
+
+| Command         | Description                                 |
+|-----------------|---------------------------------------------|
+| `h`, `j`, `k`, `l` | Move cursor: left, down, up, right       |
+| `w`             | Move to the start of the next word          |
+| `b`             | Move to the start of the previous word      |
+| `e`             | Move to the end of the current word         |
+| `0`             | Go to the start of the current line         |
+| `$`             | Go to the end of the current line           |
+| `gg`            | Go to the start of the file                 |
+| `G`             | Go to the end of the file                   |
+| `Ctrl + u`      | Scroll up half a screen                     |
+| `Ctrl + d`      | Scroll down half a screen                   |
+
+## 🏃 Screen Movement
+
+| Command        | Description                                  |
+|----------------|----------------------------------------------|
+| `zz`           | Center the current line                      |
+| `H`            | Move to the top of the screen                |
+| `M`            | Move to the middle of the screen             |
+| `L`            | Move to the bottom of the screen             |
+| `Ctrl + y`     | Scroll the screen up                         |
+| `Ctrl + e`     | Scroll the screen down                       |
+
+## ✂️ Editing and Text Manipulation
+
+| Command        | Description                                  |
+|----------------|----------------------------------------------|
+| `x`            | Delete the character under the cursor         |
+| `dd`           | Delete the current line                       |
+| `d$`           | Delete from cursor to end of line             |
+| `yy`           | Copy the current line                         |
+| `p`            | Paste after the cursor                        |
+| `P`            | Paste before the cursor                       |
+| `u`            | Undo the last action                          |
+| `Ctrl + r`     | Redo the last action                          |
+| `.`            | Repeat the last command                       |
+
+## 🪟 Window Navigation (Splits)
+
+| Command                | Description                                  |
+|------------------------|----------------------------------------------|
+| `:split` or `:sp`      | Open a horizontal split                      |
+| `:vsplit` or `:vsp`    | Open a vertical split                        |
+| `Ctrl + w + h`         | Move to the window on the left               |
+| `Ctrl + w + j`         | Move to the window below                     |
+| `Ctrl + w + k`         | Move to the window above                     |
+| `Ctrl + w + l`         | Move to the window on the right              |
+| `Ctrl + w + c`         | Close the current window                     |
+| `Ctrl + w + =`         | Equalize the size of all windows             |
+
+## 📁 File and Buffer Navigation
+
+| Command                   | Description                               |
+|---------------------------|-------------------------------------------|
+| `:e <path/to/file>`       | Open a specific file                      |
+| `:bnext` or `:bn`         | Go to the next buffer                     |
+| `:bprev` or `:bp`         | Go to the previous buffer                 |
+| `:ls`                     | List all open buffers                     |
+| `:b <number>`             | Switch to buffer by number                |
+| `:bd`                     | Close the current buffer                  |
+
+## 🔍 Search and Replace
+
+| Command                         | Description                           |
+|----------------------------------|---------------------------------------|
+| `/word`                         | Search for a word                     |
+| `?word`                         | Search backwards                      |
+| `n`                             | Next occurrence                       |
+| `N`                             | Previous occurrence                   |
+| `:%s/word/new_text/g`           | Replace all occurrences in the file   |
+| `:%s/word/new_text/gc`          | Replace with confirmation             |
+
+## ⏫ Jumps and Marks
+
+| Command         | Description                                  |
+|-----------------|----------------------------------------------|
+| `Ctrl + o`      | Return to the previous location              |
+| `Ctrl + i`      | Go to the next location (after Ctrl+o)       |
+| `ma`            | Set mark `a` at the current position         |
+| `'a`            | Go to mark `a`                               |
+| `:marks`        | List all marks                               |
+
+## ⚙️ Other Useful Tips
+
+| Command             | Description                               |
+|---------------------|-------------------------------------------|
+| `:noh`              | Remove search highlight                   |
+| `:set number`       | Show line numbers                         |
+| `:set relativenumber` | Show relative line numbers              |
+| `Ctrl + ^`          | Switch between the last two files         |
