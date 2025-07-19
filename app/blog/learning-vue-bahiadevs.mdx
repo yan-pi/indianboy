@@ -51,7 +51,7 @@ The **Options API** is the more traditional and widely used approach in Vue.js, 
 
 **Options API Example:**
 
-```vue
+```javascript
 <script>
 export default {
   // Reactive data exposed through `this`
@@ -98,7 +98,7 @@ The **Composition API** was introduced in Vue 3 and allows you to define compone
 
 **Composition API Example with `<script setup>`:**
 
-```vue
+```javascript
 <script setup>
 import { ref, onMounted } from 'vue';
 
@@ -146,7 +146,7 @@ Here is a comparison between the two APIs using the same component example:
 
 **Options API:**
 
-```vue
+```javascript
 <script>
 export default {
   data() {
@@ -172,7 +172,7 @@ export default {
 
 **Composition API:**
 
-```vue
+```javascript
 <script setup>
 import { ref } from 'vue';
 
@@ -206,7 +206,7 @@ One of the great differentiators of Vue is the concept of **Single File Componen
 
 **Example of an SFC:**
 
-```vue
+```javascript
 <template>
   <div>
     <h1>{{ message }}</h1>

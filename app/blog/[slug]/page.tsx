@@ -10,7 +10,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
-import rehypePrism from 'rehype-prism-plus'
+import rehypePrism from 'rehype-prism-plus/all'
 import { useMDXComponents } from '@/mdx-components'
 // import rehypeMermaid from 'rehype-mermaid'
 
