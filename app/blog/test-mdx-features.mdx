@@ -9,6 +9,11 @@ summary: 'Testando recursos avançados de MDX.'
 
 
 # Teste de Recursos MDX
+<Cover
+  src="https://cdn.cosmos.so/affd4b79-e848-4dfd-bd42-5f2c4a847365?format=jpeg"
+  alt="Image from the movie Alien - from cosmo.com"
+  caption="cosmo.com"
+/>
 
 ## Tabela
 
@@ -21,8 +26,21 @@ summary: 'Testando recursos avançados de MDX.'
 
 ![Logo do Projeto](/logo.png)
 
-<Mermaid chart={`graph TD
-    A[Start] --> B{Is it working?}
-    B -->|Yes| C[Finish]
-    B -->|No| D[Debug]
+<Mermaid chart={`pie
+    title NETFLIX
+    "Start" : 10
+    "Is it working?" : 20
+    "Finish" : 30
+    "Debug" : 40
 `} />
+
+## KaTeX Math
+
+Inline math: $E = mc^2$
+
+Block math:
+
+$$
+\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+$$
+
