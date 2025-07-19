@@ -1,8 +1,6 @@
-import type { MDXComponents } from 'mdx/types';
-import { ComponentPropsWithoutRef } from 'react';
-import { highlight } from 'sugar-high';
-import Image from './components/Image';
-import Mermaid from './components/Mermaid';
+import type { MDXComponents } from 'mdx/types'
+import Image from './components/Image'
+import Mermaid from './components/Mermaid'
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -15,17 +13,13 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       src: string
       alt: string
       caption: string
-    }) => {
-      return (
-        <figure>
-          <img src={src} alt={alt} className="rounded-xl" />
-          <figcaption className="text-center">{caption}</figcaption>
-        </figure>
-      )
-    },
-    code: ({ children, ...props }: ComponentPropsWithoutRef<'code'>) => {
-      const codeHTML = highlight(children as string)
-      return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
-    },
+    }) => (
+      <figure>
+        <img src={src} alt={alt} className="rounded-xl" />
+        <figcaption className="text-center">{caption}</figcaption>
+      </figure>
+    ),
+    Mermaid: ({ children }) => <Mermaid chart={children as string} />,
+    code: ({ children }) => <code>{children}</code>,
   }
 }

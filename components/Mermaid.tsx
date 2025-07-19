@@ -1,27 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react'
+'use client'
+import { useEffect, useRef } from 'react'
 import mermaid from 'mermaid'
 
-interface MermaidProps {
-  children: string
-}
+mermaid.initialize({ startOnLoad: false, theme: 'default' })
 
-const Mermaid: React.FC<MermaidProps> = ({ children }) => {
+export default function Mermaid({ chart }: { chart: string }) {
   const ref = useRef<HTMLDivElement>(null)
-  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
-    setIsClient(typeof window !== 'undefined')
-  }, [])
-
-  useEffect(() => {
-    if (isClient && ref.current) {
-      mermaid.initialize({ startOnLoad: false })
-      mermaid.contentLoaded()
-      mermaid.render('mermaid-svg', children, ref.current)
+    if (ref.current) {
+      mermaid.contentLoaded() // re-render charts
     }
-  }, [children, isClient])
+  }, [chart])
 
-  return <div ref={ref} className="my-6" />
+  return (
+    <div className="mermaid" ref={ref}>
+      {chart}
+    </div>
+  )
 }
-
-export default Mermaid
