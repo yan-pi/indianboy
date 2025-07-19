@@ -21,11 +21,8 @@ summary: 'Testando recursos avançados de MDX.'
 
 ![Logo do Projeto](/logo.png)
 
-## Mermaid
-```mermaid
-graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-```
-
+<Mermaid chart={`graph TD
+    A[Start] --> B{Is it working?}
+    B -->|Yes| C[Finish]
+    B -->|No| D[Debug]
+`} />

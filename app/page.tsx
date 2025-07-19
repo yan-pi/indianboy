@@ -10,7 +10,7 @@ import {
 export default async function Personal() {
   // Load latest 3 blog posts on the server side
   const blogPosts = await LATEST_BLOG_POSTS(3)
-  
+
   return (
     <PersonalClient
       projects={PROJECTS}

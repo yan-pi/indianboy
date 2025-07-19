@@ -187,30 +187,87 @@ html {
     border-radius: var(--border-radius-xl);
   }
 
-/* MDX Table Styling */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 2rem 0;
-  font-size: 1rem;
-  background: var(--color-card);
-  color: var(--color-foreground);
-}
-th, td {
-  border: 1px solid var(--color-border);
-  padding: 0.75em 1em;
-  text-align: left;
-}
-th {
-  background: var(--color-muted);
-  color: var(--color-foreground);
-}
-tr:nth-child(even) {
-  background: var(--color-muted);
-}
-tr:hover {
-  background: var(--color-accent);
-  color: var(--color-accent-foreground);
+  /* MDX Table Styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 1rem;
+    background: var(--color-card);
+    color: var(--color-foreground);
+  }
+  th,
+  td {
+    border: 1px solid var(--color-border);
+    padding: 0.75em 1em;
+    text-align: left;
+  }
+  th {
+    background: var(--color-muted);
+    color: var(--color-foreground);
+  }
+  tr:nth-child(even) {
+    background: var(--color-muted);
+  }
+  tr:hover {
+    background: var(--color-accent);
+    color: var(--color-accent-foreground);
+  }
 }
 
+@layer components {
+  .prose {
+    max-width: 100%;
+    color: var(--color-foreground);
+  }
+
+  .prose a {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .prose pre {
+    background: var(--color-muted);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+  }
+
+  .prose code {
+    background: var(--color-card);
+    padding: 0.2em 0.4em;
+    border-radius: 0.25rem;
+  }
+
+  .dark .prose {
+    color: var(--color-foreground);
+  }
+}
+
+/* Mermaid container */
+.mermaid {
+  background: var(--color-card);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+/* KaTeX block */
+.katex-display {
+  background: var(--color-card);
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+}
+
+/* Prism syntax highlighting */
+pre[class*='language-'] {
+  background: var(--color-muted) !important;
+  color: var(--color-foreground) !important;
+  border-radius: var(--border-radius-lg);
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+code[class*='language-'] {
+  color: var(--color-accent);
 }
