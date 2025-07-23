@@ -19,7 +19,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         <figcaption className="text-center">{caption}</figcaption>
       </figure>
     ),
-    Mermaid: ({ children }) => <Mermaid chart={children as string} />,
+    Mermaid: (props) => {
+      // Permite uso tanto <Mermaid chart={...} /> quanto <Mermaid>...</Mermaid>
+      const chart = typeof props.chart === 'string' ? props.chart : (props.children as string)
+      return <Mermaid chart={chart} />
+    },
     code: (props) => {
       // Repasse todas as props, incluindo className
       return <code {...props}>{props.children}</code>;
