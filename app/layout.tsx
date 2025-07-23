@@ -5,6 +5,7 @@ import { Header } from './header'
 import { Footer } from './footer'
 import { ThemeProvider } from 'next-themes'
 import { CustomThemeProvider } from '@/providers/theme-provider'
+import Script from 'next/script'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -42,6 +43,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script
+          src="https://umami-production-437f.up.railway.app/script.js"
+          data-website-id="16b5a86e-df78-4785-ba32-f08cbc8c9a7d"
+        />
+      </head>
       <body
         className={`${geist.variable} ${geistMono.variable} bg-[color:var(--color-background)] tracking-tight antialiased`}
       >
