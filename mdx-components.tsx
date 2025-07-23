@@ -20,6 +20,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </figure>
     ),
     Mermaid: ({ children }) => <Mermaid chart={children as string} />,
-    code: ({ children }) => <code>{children}</code>,
+    code: (props) => {
+      // Repasse todas as props, incluindo className
+      return <code {...props}>{props.children}</code>;
+    },
   }
 }

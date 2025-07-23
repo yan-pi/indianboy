@@ -22,7 +22,7 @@
 
 /* Theme Variables */
 html {
-  font-size: 120%; /* 110% of browser default (typically 17.6px) */
+  font-size: 100%; /* 110% of browser default (typically 17.6px) */
 }
 
 :root {
@@ -225,11 +225,14 @@ html {
     color: var(--color-foreground);
     font-weight: 600;
   }
-  .prose :where(strong):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  .prose
+    :where(strong):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     color: var(--color-foreground) !important;
     font-weight: 600;
   }
-  .dark .prose :where(strong):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  .dark
+    .prose
+    :where(strong):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     color: var(--color-foreground) !important;
     font-weight: 600;
   }
@@ -250,10 +253,15 @@ html {
     border-radius: var(--border-radius);
   }
 
+  .prose pre code {
+    background: none !important;
+  }
+
   .prose code {
     background: var(--color-card);
     padding: 0.2em 0.4em;
     border-radius: 0.25rem;
+    background: none !important;
   }
 
   .dark .prose {
@@ -286,15 +294,16 @@ html {
   border-radius: var(--border-radius);
 }
 
+@import '../node_modules/prism-themes/themes/prism-gruvbox-light.css';
+@import '../node_modules/prism-themes/themes/prism-gruvbox-dark.css';
+
 /* Prism syntax highlighting */
 pre[class*='language-'] {
-  background: var(--color-muted) !important;
-  color: var(--color-foreground) !important;
   border-radius: var(--border-radius-lg);
   padding: 1rem;
   overflow-x: auto;
 }
 
 code[class*='language-'] {
-  color: var(--color-accent);
+  font-family: var(--font-mono);
 }
