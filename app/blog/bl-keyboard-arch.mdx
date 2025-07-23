@@ -7,46 +7,46 @@ author: 'Yan Fernandes'
 summary: 'This document summarizes the troubleshooting and configuration flow for pairing and maintaining the Keychron K3 keyboard via Bluetooth (BLE) on Arch Linux.'
 ---
 
-# Keyboard Bluetooth trubleshoot on Arch Linux
+# Keyboard Bluetooth Troubleshoot on Arch Linux
 
-Este documento resume todo o fluxo de troubleshooting e configuração para emparelhar e manter o Keychron K3 funcionando via Bluetooth (BLE) no Arch Linux.
-
----
-
-## Sumário
-
-1. [Visão Geral](#visão-geral)
-2. [Pré-requisitos](#pré-requisitos)
-3. [Passo 1: Carregar módulos HID](#passo-1-carregar-módulos-hid)
-4. [Passo 2: Configurar `/etc/bluetooth/main.conf`](#passo-2-configurar-etcbluetoothmainconf)
-5. [Passo 3: Habilitar `bluetoothd --experimental`](#passo-3-habilitar-bluetoothd---experimental)
-6. [Passo 4: Emparelhar em modo BLE (HOGP)](#passo-4-emparelhar-em-modo-ble-hogp)
-7. [Passo 5: Tornar persistente](#passo-5-tornar-persistente)
-8. [Reversão (opcional)](#reversão-opcional)
+This document summarizes the entire troubleshooting and configuration flow to pair and keep the Keychron K3 working via Bluetooth (BLE) on Arch Linux.
 
 ---
 
-## Visão Geral
+## Summary
 
-Muitos teclados modernos, como o Keychron K3, usam o perfil BLE HID over GATT (HOGP). No Arch Linux, é necessário:
-
-- Garantir que os módulos do kernel (`uhid`, `hidp`) estejam carregados
-- Configurar o BlueZ para `ControllerMode = dual` e `--experimental` no daemon
-- Emparelhar no slot BLE (Fn+2 ou Fn+3) com um agente NoInputNoOutput (Just Works)
-- Persistir carga de módulos e reconexão automática via systemd
+1. [Overview](#overview)
+2. [Prerequisites](#prerequisites)
+3. [Step 1: Load HID modules](#step-1-load-hid-modules)
+4. [Step 2: Configure `/etc/bluetooth/main.conf`](#step-2-configure-etcbluetoothmainconf)
+5. [Step 3: Enable `bluetoothd --experimental`](#step-3-enable-bluetoothd---experimental)
+6. [Step 4: Pair in BLE mode (HOGP)](#step-4-pair-in-ble-mode-hogp)
+7. [Step 5: Make persistent](#step-5-make-persistent)
+8. [Reversal (optional)](#reversal-optional)
 
 ---
 
-## Pré-requisitos
+## Overview
 
-- Adaptador Bluetooth funcional e driver `btusb`
-- `bluez` e `bluez-utils` instalados:
+Many modern keyboards, like the Keychron K3, use the BLE HID over GATT (HOGP) profile. On Arch Linux, you need to:
+
+- Ensure the kernel modules (`uhid`, `hidp`) are loaded
+- Configure BlueZ for `ControllerMode = dual` and `--experimental` in the daemon
+- Pair in the BLE slot (Fn+2 or Fn+3) with a NoInputNoOutput agent (Just Works)
+- Persist module loading and automatic reconnection via systemd
+
+---
+
+## Prerequisites
+
+- Functional Bluetooth adapter and `btusb` driver
+- `bluez` and `bluez-utils` installed:
 
   ```bash
   sudo pacman -S bluez bluez-utils
   ```
 
-- Serviço Bluetooth habilitado e rodando:
+- Bluetooth service enabled and running:
 
   ```bash
   sudo systemctl enable --now bluetooth
@@ -54,15 +54,15 @@ Muitos teclados modernos, como o Keychron K3, usam o perfil BLE HID over GATT (H
 
 ---
 
-## Passo 1: Carregar módulos HID
+## Step 1: Load HID modules
 
-1. Carregue manualmente:
+1. Load manually:
 
    ```bash
    sudo modprobe uhid hidp
    ```
    
-2. Para persistir no boot, crie `/etc/modules-load.d/bluetooth-hid.conf`:
+2. To persist at boot, create `/etc/modules-load.d/bluetooth-hid.conf`:
 
    ```bash
    echo -e "uhid hidp" | sudo tee /etc/modules-load.d/bluetooth-hid.conf
@@ -70,17 +70,17 @@ Muitos teclados modernos, como o Keychron K3, usam o perfil BLE HID over GATT (H
 
 ---
 
-## Passo 2: Configurar `/etc/bluetooth/main.conf`
+## Step 2: Configure `/etc/bluetooth/main.conf`
 
-Edite com seu editor favorito (`nano`, `vim` etc.):
+Edit with your favorite editor (`nano`, `vim`, etc.):
 
 ```ini
 [General]
 ControllerMode = dual   # EDR + BLE
-AutoEnable = true       # Liga adaptador automaticamente
+AutoEnable = true       # Automatically power adapter
 ```
 
-Reinicie o serviço:
+Restart the service:
 
 ```bash
 sudo systemctl restart bluetooth
@@ -88,9 +88,9 @@ sudo systemctl restart bluetooth
 
 ---
 
-## Passo 3: Habilitar `bluetoothd --experimental`
+## Step 3: Enable `bluetoothd --experimental`
 
-1. Crie o drop-in:
+1. Create the drop-in:
 
    ```bash
    sudo mkdir -p /etc/systemd/system/bluetooth.service.d
@@ -101,7 +101,7 @@ sudo systemctl restart bluetooth
    EOF
    ```
   
-2. Recarregue e reinicie:
+2. Reload and restart:
 
    ```bash
    sudo systemctl daemon-reload
@@ -110,37 +110,37 @@ sudo systemctl restart bluetooth
 
 ---
 
-## Passo 4: Emparelhar em modo BLE (HOGP)
+## Step 4: Pair in BLE mode (HOGP)
 
-1. No teclado, pressione **Fn + 2** (slot 2) até o LED piscar.
-2. No terminal:
+1. On the keyboard, press **Fn + 2** (slot 2) until the LED blinks.
+2. In the terminal:
 
    ```bash
    sudo bluetoothctl
    [bluetooth]# agent NoInputNoOutput
    [bluetooth]# default-agent
    [bluetooth]# scan on
-   # Aguarde DC:2C:26:37:2E:F5 (LE)
+   # Wait for DC:2C:26:37:2E:F5 (LE)
    [bluetooth]# pair DC:2C:26:37:2E:F5
    [bluetooth]# trust DC:2C:26:37:2E:F5
    [bluetooth]# connect DC:2C:26:37:2E:F5
    ```
    
-3. Verifique em `info` se aparece `00001812-0000-1000-8000-00805f9b34fb (HID over GATT)`.
-4. Teste digitando em um editor de texto.
+3. Check in `info` if `00001812-0000-1000-8000-00805f9b34fb (HID over GATT)` appears.
+4. Test typing in a text editor.
 
 ---
 
-## Passo 5: Tornar persistente
+## Step 5: Make persistent
 
-1. **Marcar como trusted** (já feito no pairing acima).
-2. **Garantir módulos** (já persistidos em `/etc/modules-load.d`).
-3. **Serviço systemd para reconexão**:
+1. **Mark as trusted** (already done in pairing above).
+2. **Ensure modules** (already persisted in `/etc/modules-load.d`).
+3. **systemd service for reconnection**:
 
    ```bash
    sudo tee /etc/systemd/system/connect-keychron.service > /dev/null <<EOF
    [Unit]
-   Description=Reconectar Keychron K3 BLE
+   Description=Reconnect Keychron K3 BLE
    After=bluetooth.target
    Wants=bluetooth.target
 
@@ -158,13 +158,13 @@ sudo systemctl restart bluetooth
    sudo systemctl start connect-keychron.service
    ```
 
-Na próxima reinicialização, o teclado reconectará sozinho (se mantido em slot BLE ativo).
+On the next reboot, the keyboard will reconnect automatically (if kept in the active BLE slot).
 
 ---
 
-## Reversão (opcional)
+## Reversal (optional)
 
-Para desfazer tudo:
+To undo everything:
 
 ```bash
 sudo systemctl disable connect-keychron.service
