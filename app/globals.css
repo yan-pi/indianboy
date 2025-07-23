@@ -288,14 +288,28 @@ html {
 }
 
 /* KaTeX block */
-.katex-display {
-  background: var(--color-card);
-  padding: 0.5rem;
-  border-radius: var(--border-radius);
+.katex-display,
+.katex {
+  /* background: var(--color-card); */
+  color: var(--color-foreground);
+  /* border-radius: var(--border-radius); */
+  padding: 0.75rem 1rem;
+  margin: 1.5rem 0;
+  /* box-shadow: var(--shadow-md); */
+  /* border: 1px solid var(--color-border); */
+  overflow-x: auto;
+  font-size: 1.08em;
+}
+.dark .katex-display,
+.dark .katex {
+  /* background: var(--color-card); */
+  color: var(--color-foreground);
+  border-color: var(--color-border);
 }
 
 @import '../node_modules/prism-themes/themes/prism-gruvbox-light.css';
 @import '../node_modules/prism-themes/themes/prism-gruvbox-dark.css';
+@import '../node_modules/katex/dist/katex.min.css';
 
 /* Prism syntax highlighting */
 pre[class*='language-'] {
