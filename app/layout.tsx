@@ -18,11 +18,11 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   title: {
-    default: 'Yan - Personal website',
-    template: '%s | Nim',
+    default: 'Yan - indianboy.sh',
+    template: '%s | indianboy.sh',
   },
   description:
-    'Nim is a free and open-source personal website template built with Next.js 15, React 19 and Motion-Primitives.',
+    'Yan is a personal blog by IndianBoy, sharing insights on technology, programming, and life experiences.',
 }
 
 const geist = Geist({

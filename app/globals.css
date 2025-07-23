@@ -221,6 +221,24 @@ html {
     color: var(--color-foreground);
   }
 
+  .prose :where(strong, b) {
+    color: var(--color-foreground);
+    font-weight: 600;
+  }
+  .prose :where(strong):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    color: var(--color-foreground) !important;
+    font-weight: 600;
+  }
+  .dark .prose :where(strong):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    color: var(--color-foreground) !important;
+    font-weight: 600;
+  }
+  .prose :where(ul, ol, li) {
+    color: var(--color-foreground);
+  }
+  .prose :where(h1, h2, h3, h4, h5, h6) {
+    color: var(--color-foreground);
+  }
   .prose a {
     color: var(--color-accent);
     text-decoration: underline;
@@ -239,6 +257,15 @@ html {
   }
 
   .dark .prose {
+    color: var(--color-foreground);
+  }
+  .dark .prose :where(strong, b) {
+    color: var(--color-foreground);
+  }
+  .dark .prose :where(ul, ol, li) {
+    color: var(--color-foreground);
+  }
+  .dark .prose :where(h1, h2, h3, h4, h5, h6) {
     color: var(--color-foreground);
   }
 }
