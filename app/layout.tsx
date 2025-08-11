@@ -45,8 +45,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <Script
-          src="https://umami-production-437f.up.railway.app/script.js"
-          data-website-id="16b5a86e-df78-4785-ba32-f08cbc8c9a7d"
+          src="https://umami-production-42f7.up.railway.app/script.js"
+          data-website-id="0872e48b-b5cf-4175-be8b-b401a27c7085"
         />
       </head>
       <body
