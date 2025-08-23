@@ -73,7 +73,7 @@ export function Footer() {
       style={{ borderColor: 'var(--color-border)' }}
     >
       <div className="flex items-center justify-between">
-        <a href="https://github.com/ibelick/nim" target="_blank">
+        <a href="https://github.com/yan-pi/portifolio" target="_blank">
           <TextLoop className="text-xs text-[var(--color-muted-foreground)]">
             <span>© 2025 Yan Fernandes.</span>
             <span>I use Arch and Neovim btw.</span>
