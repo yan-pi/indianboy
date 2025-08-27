@@ -44,7 +44,7 @@ The proposed solution includes:
 
 The diagram below, created with **Mermaid**, shows the relationships between the main database entities:
 
-```mermaid
+<Mermaid chart={`
 erDiagram
     User {
         int id PK
@@ -93,7 +93,7 @@ erDiagram
     Service ||--o{ Permission : "defines permissions"
     Role ||--o{ RolePermission : "has"
     Permission ||--o{ RolePermission : "assigned to"
-```
+`} />
 
 ---
 
