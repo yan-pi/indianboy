@@ -1,0 +1,327 @@
+---
+title: 'Plinq e LGPD: O Preço da Segurança Não Pode Ser a Ilegalidade'
+description: 'Um rant sobre a Plinq, LGPD e vigilantismo digital'
+publishedAt: '2025-10-09'
+tags: ['lgpd', 'webscraping']
+author: 'Yan Fernandes'
+summary: 'Um rant sobre a Plinq, LGPD e vigilantismo digital'
+---
+
+## 1. Introdução: Quando o Fim Não Justifica os Meios
+
+A violência contra mulheres é real, assustadora e inaceitável. Feminicídios, agressões, relacionamentos abusivos – são problemas gravíssimos que exigem soluções urgentes. Mas aqui vai uma verdade inconveniente: a urgência de um problema não nos autoriza a violar direitos fundamentais na busca por soluções.
+
+É nesse contexto que surge a Plinq, um aplicativo brasileiro que promete revolucionar a segurança feminina permitindo que mulheres verifiquem antecedentes criminais de potenciais parceiros com apenas alguns cliques. A proposta soa heroica, quase messiânica: "vamos salvar vidas dando informação às mulheres".
+
+Mas tem um problema. Vários, na verdade.
+
+A Lei Geral de Proteção de Dados (LGPD), em vigor desde 2020, estabelece regras claras sobre como dados pessoais podem ser tratados no Brasil. E tudo indica que a Plinq está operando numa zona cinzenta que pode facilmente resvalar para a ilegalidade. Pior: há fortes indícios de que a empresa pode estar acessando sistemas judiciais restritos usando credenciais de terceiros – uma prática que configuraria não apenas violação à LGPD, mas potencialmente crimes federais.
+
+Este artigo vai além da análise jurídica fria. Vamos demonstrar por que a Plinq representa um risco legal e ético inaceitável, como suas práticas podem estar violando múltiplas leis, e por que soluções que desrespeitam direitos fundamentais não são soluções – são apenas novos problemas.
+
+## 2. Plinq: A Tecnologia Por Trás da Promessa
+
+### A Narrativa de Origem
+
+A Plinq foi criada por Sabrine Matos após o feminicídio da jornalista Vanessa Ricarte, morta por um ex-parceiro com histórico de violência. A história é comovente e a intenção declarada é nobre. Mas como diz o ditado: de boas intenções o inferno está cheio.
+
+Em menos de dois meses usando plataformas no-code, Sabrine e seu sócio Felipe Bahia tiraram a Plinq do papel. Esse detalhe é crucial: nenhum dos dois tem formação técnica ou jurídica especializada. E isso fica evidente quando analisamos como o serviço opera.
+
+### O Que a Plinq Promete Fazer
+
+O funcionamento declarado é simples: você insere nome completo, CPF ou telefone de alguém e recebe:
+- CPF parcialmente oculto, nome da mãe, idade, signo, signo chinês
+- Uma classificação binária: **Green Flag** (seguro) ou **Red Flag** (perigoso)
+- Processos criminais e ocorrências judiciais
+
+A empresa alega consultar cerca de 45 bases de dados públicas, incluindo Diários Oficiais, Tribunais de Justiça e CNJ. Mas é aqui que a história começa a desmoronar.
+
+### O Problema do Webscraping em Sistemas Judiciais
+
+Vamos falar de um elefante na sala que a Plinq prefere ignorar: **webscraping em sistemas judiciais**.
+
+Webscraping é a técnica de extrair dados de sites de forma automatizada. Em teoria, qualquer cidadão pode acessar processos públicos nos sites dos tribunais. Na prática, fazer isso em escala industrial – consultando milhares de processos diariamente – é bem diferente.
+
+Os sistemas judiciais brasileiros não são simples sites de consulta pública. Temos uma fragmentação absurda:
+- **PJe** (Processo Judicial eletrônico) – usado pela Justiça Federal e alguns tribunais estaduais
+- **e-SAJ** – sistema da Justiça Estadual de São Paulo e outros estados
+- **Projudi** – adotado por vários estados
+- **JTe** – Justiça do Trabalho
+- **JE** – Justiça Eleitoral
+- **eproc** – usado no Rio Grande do Sul e outros estados
+- **PJeCalc** – sistema de cálculos judiciais
+
+Cada um desses sistemas tem suas próprias regras de acesso, CAPTCHAs, limitações de consulta e, crucialmente, **níveis diferentes de publicidade**.
+
+### A Pergunta que a Plinq Não Quer Responder
+
+Aqui está o X da questão: **como uma startup de dois fundadores sem formação técnica consegue acessar e consolidar informações de 45 bases de dados judiciais diferentes em "poucos minutos"?**
+
+A resposta óbvia é: webscraping automatizado. Mas surge um questionamento ainda mais grave: **a Plinq estaria usando credenciais de acesso de advogados ou juízes para acessar áreas restritas desses sistemas?**
+
+Explico. Muitos processos judiciais tramitam em segredo de justiça. Outros têm dados sensíveis que só são acessíveis a partes do processo, seus advogados e magistrados. Se a Plinq está realmente "consultando 45 bases" e retornando informações detalhadas, incluindo processos em segredo de justiça, como reportado pelo Núcleo Jornalismo no caso da ex-deputada Carla Zambelli, então:
+
+1. **Ou** estão violando segredos de justiça ao expor processos restritos
+2. **Ou** estão usando credenciais de terceiros para acessar sistemas privativos
+3. **Ou** ambos
+
+Qualquer uma dessas alternativas é gravíssima.
+
+### O Mercado Negro de Credenciais
+
+Existe um mercado paralelo onde credenciais de acesso a sistemas judiciais são vendidas ou compartilhadas. Alguns serviços de "investigação" usam logins de advogados (às vezes sem o conhecimento deles, através de roubo de credenciais) para acessar processos restritos.
+
+Se a Plinq está fazendo isso – e o volume e velocidade de consultas sugere fortemente que sim – estamos falando de:
+- **Falsidade ideológica** (art. 299 do Código Penal)
+- **Invasão de dispositivo informático** (art. 154-A do CP)
+- **Violação de sigilo funcional** (art. 325 do CP)
+- **Violação massiva da LGPD**
+
+A empresa nunca explicou publicamente como consegue acessar tantos sistemas diferentes tão rapidamente. Essa opacidade é, por si só, um sinal de alerta.
+
+## 3. As Múltiplas Violações à LGPD
+
+### 3.1 A Farsa do "Legítimo Interesse"
+
+A Plinq alega operar sob a base legal do "legítimo interesse". Vamos destruir esse argumento.
+
+O legítimo interesse, previsto no art. 7º, IX da LGPD, permite tratamento de dados sem consentimento quando "necessário para atender aos interesses legítimos do controlador ou de terceiro, exceto no caso de prevalecerem direitos e liberdades fundamentais do titular".
+
+O problema é que a LGPD estabelece um **teste de balanceamento**. A ANPD publicou guia orientativo exigindo que o controlador demonstre que o tratamento é necessário, proporcional e que os direitos do titular não prevalecem.
+
+A Plinq falha miseravelmente nesse teste:
+
+**Necessidade?** Não. Existem formas menos invasivas de promover segurança pessoal (educação, botões de emergência, compartilhamento de localização com amigos).
+
+**Proporcionalidade?** Absolutamente não. Coletar signo e signo chinês para fins de "segurança" é desproporcional ao ponto do ridículo.
+
+**Direitos do titular?** Totalmente ignorados. A pessoa nem sabe que está sendo consultada.
+
+### 3.2 Transparência Zero
+
+O art. 10, §2º da LGPD é cristalino: "O controlador deverá adotar medidas para garantir a transparência do tratamento de dados baseado em seu legítimo interesse".
+
+A Plinq faz exatamente o oposto: garante que "a consulta é confidencial" e que "a pessoa verificada não recebe qualquer notificação". Isso não é apenas falta de transparência – é **opacidade intencional**.
+
+Imagine descobrir, meses ou anos depois, que dezenas ou centenas de pessoas consultaram seus dados criminais, criaram um perfil sobre você, te classificaram como "perigoso", e você nunca soube de nada. Não teve direito de defesa, não pôde contestar erros, não pôde exercer nenhum dos seus direitos previstos no art. 18 da LGPD.
+
+Isso é kafkiano.
+
+### 3.3 O Mito dos "Dados Públicos"
+
+A Plinq se esconde atrás do argumento de que "usa apenas dados públicos". Mas como aponta especialistas, dado público não significa dado de livre uso comercial indiscriminado.
+
+Primeiro: nem todos os dados judiciais são igualmente públicos. Processos em segredo de justiça, dados de vítimas, informações sobre menores – tudo isso é restrito.
+
+Segundo: o STF já decidiu que o uso comercial sistemático de dados públicos pode sim violar direitos de privacidade. Uma coisa é você consultar um processo específico manualmente. Outra completamente diferente é uma empresa consolidar automaticamente todos os seus processos, criar perfis, atribuir classificações e vender isso.
+
+Terceiro: a LGPD não exclui dados públicos. O §4º do art. 7º fala de "dados tornados manifestamente públicos **pelo titular**", não dados públicos por imposição legal.
+
+### 3.4 Criação de Perfis Discriminatórios
+
+A classificação "Red Flag" vs "Green Flag" é uma forma de **profiling** – criação de perfis automatizados. A LGPD exige cuidados especiais com decisões automatizadas que afetem interesses dos titulares (art. 20).
+
+Mas aqui tem algo pior: essa classificação é intrinsecamente discriminatória e simplista. Processos judiciais nem sempre indicam culpa ou condenação. Uma pessoa pode estar respondendo a um processo e ser inocentada. Pode ter sido acusada falsamente. Pode ter processos antigos arquivados por falta de provas.
+
+A Plinq ignora toda essa complexidade e cria uma etiqueta binária que pode perseguir alguém indefinidamente.
+
+Isso viola:
+- O princípio da dignidade da pessoa humana (art. 1º, III da CF)
+- O princípio da presunção de inocência (art. 5º, LVII da CF)
+- A LGPD em múltiplos artigos
+
+### 3.5 Dados Sensíveis Disfarçados
+
+Embora a LGPD brasileira não classifique antecedentes criminais como dados sensíveis (diferente da GDPR europeia), isso não significa que são dados triviais.
+
+Antecedentes criminais revelam aspectos íntimos da vida de uma pessoa. Podem indicar condições de saúde mental, situações de vulnerabilidade social, erros do passado. Tratá-los de forma leviana, sem salvaguardas adequadas, é temerário.
+
+Além disso, o nome da mãe é considerado dado pessoal sensível por poder ser usado para fraudes de identidade. A Plinq expõe esse dado sem necessidade alguma.
+
+## 4. A Bomba-Relógio Legal
+
+### 4.1 Penalidades Administrativas Iminentes
+
+A LGPD prevê multas de até 2% do faturamento, limitadas a R$ 50 milhões por infração. A Plinq pode estar cometendo múltiplas infrações simultaneamente:
+
+- Tratamento sem base legal (art. 7º)
+- Falta de transparência (art. 6º, VI e art. 10, §2º)
+- Ausência de minimização de dados (art. 6º, III)
+- Violação ao direito de acesso (art. 9º)
+- Não comunicação de incidentes de segurança (art. 48)
+- Uso indevido de dados sensíveis (se comprovado acesso a processos restritos)
+
+Se a ANPD aplicar multa por cada infração, o valor pode ser catastrófico para uma startup em estágio inicial.
+
+### 4.2 Crimes Federais
+
+Mas as penalidades administrativas são o menor dos problemas. Se ficar comprovado que a Plinq:
+
+1. **Usa credenciais de terceiros** para acessar sistemas judiciais → Crime de **falsidade ideológica** (art. 299 CP) e **invasão de dispositivo informático** (art. 154-A CP) – penas de 6 meses a 4 anos de reclusão
+
+2. **Expõe processos em segredo de justiça** → **Violação de sigilo funcional** (art. 325 CP) – pena de 1 a 4 anos
+
+3. **Comercializa dados obtidos ilicitamente** → Pode ser enquadrado em **receptação** qualificada (art. 180 CP)
+
+Estamos falando de crimes graves, que podem levar à **prisão dos fundadores** e à **dissolução compulsória da empresa**.
+
+### 4.3 O Precedente Fatal do Lulu
+
+Em 2013, o aplicativo Lulu permitia que mulheres avaliassem homens usando dados do Facebook sem consentimento. Foi retirado do ar por decisão judicial em 2014.
+
+O Tribunal de Justiça do DF determinou que a empresa deveria excluir todos os dados de usuários que não tivessem dado consentimento prévio. O Ministério Público instaurou inquérito civil público alegando violação à honra e privacidade.
+
+E isso foi **antes da LGPD**. Imagine agora, com uma lei federal específica sobre proteção de dados.
+
+A Plinq está seguindo exatamente o mesmo caminho – na verdade, um caminho pior, porque lida com dados ainda mais sensíveis (antecedentes criminais vs. avaliações subjetivas).
+
+### 4.4 Processos Individuais em Massa
+
+Qualquer pessoa que tenha seus dados consultados pela Plinq pode processar a empresa por:
+- Danos morais (exposição indevida de dados sensíveis)
+- Danos materiais (se houver prejuízo concreto, como perda de oportunidade de relacionamento)
+- Violação à privacidade e intimidade
+
+Se 10 mil usuárias já consultaram a plataforma, e cada uma fez em média 5 consultas, são 50 mil pessoas potencialmente afetadas. Se apenas 1% delas processar, são 500 ações judiciais.
+
+Uma ação de dano moral pode facilmente resultar em indenização de R$ 10 mil a R$ 50 mil. Multiplique isso por 500. Faça as contas.
+
+## 5. A Ética do Vigilantismo Digital
+
+### 5.1 Vigilantismo Digital Como Modelo de Negócio
+
+O Estado tem o monopólio da força e da justiça criminal. Não é permitido que cidadãos façam investigações paralelas, julguem e condenem outros cidadãos – nem no mundo físico, nem no digital.
+
+A Plinq está criando um sistema de vigilantismo digital privatizado. Está permitindo que pessoas julguem outras baseadas em dados parciais, descontextualizados e potencialmente desatualizados, sem qualquer supervisão judicial ou possibilidade de defesa.
+
+Isso não é empoderamento. É **linchamento digital institucionalizado** disfarçado de ferramenta de segurança.
+
+### 5.2 Informação Descontextualizada Como Arma
+
+Processos judiciais contam histórias complexas. Um processo criminal pode envolver:
+- Acusações que foram arquivadas por falta de provas
+- Denúncias que resultaram em absolvição
+- Crimes de menor potencial ofensivo já prescritos
+- Contextos sociais e pessoais que explicam (mas não justificam) condutas
+
+A Plinq transforma essa complexidade numa classificação binária simplista: "Red Flag" ou "Green Flag". Sem contexto, sem nuances, sem direito de resposta.
+
+Isso não é informação. É **desinformação estrutural**. E pode ter consequências devastadoras na vida de pessoas que já enfrentaram o sistema de justiça, independentemente do desfecho.
+
+### 5.3 Falsa Sensação de Segurança
+
+Paradoxalmente, a Plinq pode estar **aumentando o risco** para as mulheres ao criar uma falsa sensação de segurança.
+
+Estudos mostram que a maioria dos casos de violência contra mulheres é cometida por pessoas sem antecedentes criminais registrados. Muitos agressores nunca foram denunciados. Outros foram denunciados mas não foram condenados.
+
+Uma classificação "Green Flag" não significa que a pessoa é segura. Significa apenas que não há registro criminal público contra ela. Uma usuária que confia cegamente nisso pode se colocar em risco.
+
+### 5.4 O Potencial de Abuso
+
+A Plinq alega que proíbe uso indevido nos termos de serviço. Mas isso é insuficiente.
+
+Uma ferramenta que permite consultar dados pessoais sensíveis de forma anônima e sem notificação ao titular é um **playground para stalkers, assediadores e criminosos**.
+
+Imagine:
+- Um ex-namorado abusivo usando a plataforma para monitorar múltiplas vítimas
+- Empregadores usando a ferramenta para discriminação em processos seletivos
+- Grupos organizados usando os dados para doxxing e perseguição
+- Criminosos usando informações para golpes e extorsões
+
+A empresa diz que vai banir usuários com "comportamento indevido". Como? Se a consulta é anônima e confidencial, como vão detectar o uso indevido?
+
+## 6. Conclusão: A Colisão Entre Narrativa e Legalidade
+
+### O Problema Real Existe, Mas a Solução É Questionável
+
+A violência contra mulheres é inegável e urgente. Ninguém com um mínimo de senso deveria contestar a necessidade de soluções efetivas. Mas efetividade não pode ser medida apenas pela intenção declarada – precisa passar pelo crivo da legalidade, da ética e da viabilidade técnica.
+
+A Plinq construiu uma narrativa poderosa: "vamos salvar vidas". É difícil questionar algo assim sem parecer insensível. Mas é justamente quando uma causa é emocionalmente apelativa que o escrutínio crítico se torna mais necessário, não menos.
+
+A verdadeira proteção de mulheres demanda:
+- **Educação** sobre sinais de relacionamentos abusivos
+- **Fortalecimento das redes de apoio** (amigas, família, serviços públicos)
+- **Efetividade do sistema de justiça** em processar e condenar agressores
+- **Políticas públicas** de prevenção e acolhimento a vítimas
+- **Tecnologias éticas** como botões de pânico, compartilhamento de localização com pessoas de confiança, e sistemas de alerta em situações de risco
+
+Essas alternativas existem, funcionam e não exigem violação de direitos fundamentais.
+
+### A LGPD Como Termômetro Ético
+
+A Lei Geral de Proteção de Dados não é um capricho burocrático. É o resultado de décadas de discussão sobre como equilibrar inovação tecnológica com direitos fundamentais. Quando uma empresa colide frontalmente com múltiplos artigos da LGPD, isso não é acidente – é sintoma de um modelo de negócio fundamentalmente problemático.
+
+A ANPD tem demonstrado disposição crescente para fiscalizar e sancionar. Em 2024, investigou grandes empresas de tecnologia, aplicou medidas preventivas com multas diárias e consolidou sua atuação regulatória. O fato de ainda não ter multado empresas privadas massivamente não significa tolerância – significa que está construindo precedentes sólidos.
+
+### O Risco Legal Não É Especulativo
+
+As violações identificadas neste artigo não são interpretações elásticas da lei. São claras, múltiplas e potencialmente graves:
+
+- **Tratamento sem base legal adequada** está documentado na própria operação declarada pela empresa
+- **Falta de transparência** é assumida como característica do serviço ("consulta confidencial")
+- **Acesso a sistemas judiciais** levanta questionamentos técnicos que a empresa não respondeu publicamente
+- **Uso de credenciais de terceiros**, se comprovado, configura crimes federais com pena de reclusão
+
+Esses não são riscos abstratos que dependem de interpretação criativa. São buracos jurídicos tão grandes que se pode dirigir um caminhão através deles.
+
+### A Questão Ética Que Permanece
+
+Além do legal, há o ético. Uma sociedade que normaliza o vigilantismo digital, mesmo com boas intenções, está abrindo precedentes perigosos.
+
+Se a Plinq pode consolidar dados criminais para "proteger mulheres", por que empregadores não poderiam fazer o mesmo para "proteger suas empresas"? Por que proprietários não poderiam usar isso para "proteger seus imóveis"? Por que escolas não poderiam consultar "para proteger as crianças"?
+
+O problema de argumentos baseados em "segurança" é que eles são infinitamente expansíveis. E quando aceitamos que certos fins justificam certos meios, descobrimos tarde demais que abrimos uma caixa de Pandora.
+
+### O Que Este Caso Nos Ensina
+
+A Plinq é um estudo de caso sobre como **narrativas emocionalmente potentes podem obscurecer análise crítica**. É fácil aplaudir uma "ferramenta de empoderamento feminino". É mais difícil – mas necessário – perguntar: a que custo? Com que métodos? Dentro de quais limites legais?
+
+Este artigo não desqualifica a preocupação legítima com a segurança de mulheres. Questiona se uma startup operando em zona de ilegalidade manifesta, potencialmente usando credenciais roubadas para acessar sistemas judiciais restritos, e violando múltiplos direitos fundamentais, é realmente a heroína dessa história.
+
+### Observações Finais
+
+A fundadora da Plinq disse: "Claro que pode ter processo, mas o direito à vida vem antes do direito à privacidade. Se a gente salvar uma mulher, já valeu".
+
+Essa frase revela algo importante: a percepção de que direitos fundamentais são hierárquicos de forma simplista, e que emergências justificam qualquer metodologia. Mas o direito constitucional não funciona assim. Direitos não são absolutos nem estão em hierarquia fixa – eles precisam ser balanceados caso a caso, dentro de marcos legais estabelecidos.
+
+Mais preocupante: assumir que processos judiciais são inevitáveis e aceitáveis como "custo de fazer negócio" demonstra uma relação problemática com a legalidade. Não é assim que empresas responsáveis operam.
+
+O debate sobre a Plinq não é sobre ser a favor ou contra a segurança de mulheres. É sobre se aceitamos que causas nobres dispensam conformidade legal, transparência ética e respeito a direitos fundamentais.
+
+A resposta que uma sociedade democrática dá a essa pergunta define o tipo de sociedade que ela quer ser.
+
+---
+
+## Referências
+
+1. **Lei nº 13.709/2018 (LGPD)** - Lei Geral de Proteção de Dados Pessoais. Disponível em: https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm
+
+2. **Código Penal Brasileiro** (Decreto-Lei nº 2.848/1940). Disponível em: https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848.htm
+
+3. **Constituição Federal de 1988**. Disponível em: https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm
+
+4. **ANPD - Autoridade Nacional de Proteção de Dados**. Guia Orientativo sobre Legítimo Interesse. Disponível em: https://www.gov.br/anpd/pt-br/
+
+5. **Núcleo Jornalismo**. "Novo app propõe devassar a vida criminal do seu boy por menos de R$10". Junho de 2025. Disponível em: https://nucleo.jor.br/
+
+6. **Revista Exame**. "Aos 28 anos, ela criou um site para alertar mulheres quando o 'boy' é cilada". Setembro/Outubro de 2025.
+
+7. **LICKS ATTORNEYS**. "O Legítimo Interesse no Tratamento de Dados Pessoais". Disponível em: https://www.lickslegal.com/
+
+8. **Conjur**. "Aplicativo Lulu não pode usar dados de usuários sem autorização". Dezembro de 2013. Disponível em: https://www.conjur.com.br/
+
+9. **Migalhas**. "As Polêmicas do Lulu". Janeiro de 2014. Disponível em: https://www.migalhas.com.br/
+
+10. **ANPD**. "ANPD aplica a primeira multa por descumprimento à LGPD". Julho de 2023. Disponível em: https://www.gov.br/anpd/
+
+11. **Mayer Brown / Tauil & Chequer**. "Um Olhar Retrospectivo Sobre a ANPD e a Proteção de Dados no Brasil em 2024". Janeiro de 2025.
+
+12. **Pessoa & Pessoa**. "ANPD não multou empresas por violação da LGPD em 2024". 2025.
+
+13. **EMPTOR**. "Verificações de antecedentes no Brasil - O que você precisa saber". Disponível em: https://www.emptor.io/pt/
+
+14. **CNJ - Conselho Nacional de Justiça**. Resolução sobre sistemas processuais eletrônicos.
+
+---
+
+*Este artigo expressa análise crítica fundamentada em interpretação jurídica. Para situações concretas, consulte advogado especializado em direito digital e proteção de dados.*
