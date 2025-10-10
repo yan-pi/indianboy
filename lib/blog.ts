@@ -9,7 +9,7 @@ import { BlogPost } from './types'
  * @returns Promise<BlogPost[]> Array of blog posts with metadata, sorted by publishedAt date (newest first)
  */
 export async function getBlogPosts(): Promise<BlogPost[]> {
-  const blogDir = path.join(process.cwd(), 'app', 'blog')
+  const blogDir = path.join(process.cwd(), 'app', 'blog', 'posts')
   
   try {
     // Read all .mdx files in the blog directory
@@ -74,7 +74,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
  * @returns Promise<BlogPost | null> The blog post or null if not found
  */
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
-  const blogDir = path.join(process.cwd(), 'app', 'blog')
+  const blogDir = path.join(process.cwd(), 'app', 'blog', 'posts')
   const mdxPath = path.join(blogDir, `${slug}.mdx`)
   
   try {

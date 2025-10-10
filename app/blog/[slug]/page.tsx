@@ -38,7 +38,7 @@ export default async function BlogPost({ params }: Props) {
   const post = await getBlogPost(slug)
   if (!post) notFound()
 
-  const blogDir = path.join(process.cwd(), 'app', 'blog')
+  const blogDir = path.join(process.cwd(), 'app', 'blog', 'posts')
   const mdxPath = path.join(blogDir, `${slug}.mdx`)
   const fileContent = fs.readFileSync(mdxPath, 'utf-8')
   const { content } = matter(fileContent)
