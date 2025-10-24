@@ -16,8 +16,8 @@ export function IntroSection({
       <div className="flex-1">
         <p className="theme-text-muted">
           Software Engineer with an unhealthy obsession for Linux and Neovim.
-          Former front‑end lead at FESF/SUS, now technical staff at Sats Capital
-          while crafting open-source projects in my spare time, when
+          Former Techlead at FESF/SUS, now technical staff at Sats Capital while
+          crafting open-source projects in my spare time
         </p>
       </div>
     </motion.section>
