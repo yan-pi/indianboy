@@ -22,7 +22,7 @@ export function Header() {
           className="tect-lg text-[var(--color-muted-foreground)]"
           delay={0.5}
         >
-          Tech Guy
+          Lead Engineer
         </TextEffect>
       </div>
     </header>

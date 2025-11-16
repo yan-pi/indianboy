@@ -24,7 +24,7 @@ export const PROJECTS: Project[] = [
 export const WORK_EXPERIENCE: WorkExperience[] = [
   {
     company: 'Sats Capital',
-    title: 'Tech Lead',
+    title: 'Lead Engineer',
     start: '2023',
     end: 'Present',
     link: 'https://satscapital.com.br',
