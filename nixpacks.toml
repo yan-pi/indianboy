@@ -4,12 +4,14 @@ nixPkgs = ["nodejs_20"]
 [phases.install]
 cmds = [
   "corepack enable",
-  "corepack prepare pnpm@latest --activate",
+  "corepack prepare pnpm@10.16.1 --activate",
   "pnpm install --frozen-lockfile"
 ]
 
 [phases.build]
-cmds = ["pnpm run build"]
+cmds = [
+  "pnpm run build"
+]
 
 [start]
-cmd = "pnpm start"
+cmd = "node .next/standalone/server.js"

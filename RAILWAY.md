@@ -2,6 +2,21 @@
 
 This project uses Next.js 16 with Turbopack and requires specific configuration for Railway deployment.
 
+## Quick Fix Options
+
+Railway provides two build methods:
+
+### Option 1: Nixpacks (Default - Recommended)
+
+Uses `nixpacks.toml` configuration. Railway auto-detects and uses this.
+
+### Option 2: Docker (If Nixpacks fails)
+
+Uses `Dockerfile` for build. Switch in Railway project settings:
+
+- Go to Project Settings → Deploy
+- Change "Builder" from "Nixpacks" to "Dockerfile"
+
 ## Required Configuration
 
 ### 1. Node.js Version
