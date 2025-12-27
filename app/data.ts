@@ -31,7 +31,7 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     id: 'work1',
   },
   {
-    company: 'FESF/SUS (Brazilian Health System)',
+    company: 'FESF/SUS (Brazilian Gov HealthCare System)',
     title: 'Lead Front-end Engineer',
     start: '2024',
     end: '2025',
