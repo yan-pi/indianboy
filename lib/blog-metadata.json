@@ -1,0 +1,192 @@
+[
+  {
+    "title": "How to Start in Software Engineering",
+    "description": "Stop collecting courses and start delivering. Learn what actually works: visibility, accountability, and the ability to generate value.",
+    "summary": "A pragmatic guide on breaking into tech: building in public, working strategically, and generating real value.",
+    "link": "/blog/how-to-start",
+    "uid": "blog-how-to-start",
+    "slug": "how-to-start",
+    "publishedAt": "2025-11-14",
+    "tags": [
+      "career",
+      "software engineering",
+      "entrepreneurship",
+      "open source"
+    ],
+    "author": "Yan Fernandes",
+    "readingTime": "5 min read"
+  },
+  {
+    "title": "Keyboard Bluetooth Troubleshoot on Arch Linux",
+    "description": "A comprehensive guide to troubleshooting and configuring Bluetooth for Keychron K3 on Arch Linux, ensuring a smooth connection and persistent setup.",
+    "summary": "This document summarizes the troubleshooting and configuration flow for pairing and maintaining the Keychron K3 keyboard via Bluetooth (BLE) on Arch Linux.",
+    "link": "/blog/bl-keyboard-arch",
+    "uid": "blog-bl-keyboard-arch",
+    "slug": "bl-keyboard-arch",
+    "publishedAt": "2025-06-31",
+    "tags": [
+      "linux"
+    ],
+    "author": "Yan Fernandes",
+    "readingTime": "3 min read"
+  },
+  {
+    "title": "My Approach: Managing Personal Finances with Neovim, Copilot, and Monthly Ledger Books",
+    "description": "Over the past months, I have adopted a practical and developer-friendly approach to personal finance management by leveraging my daily tools: Neovim, GitHub Copilot, and a system of monthly ledger books in Markdown.",
+    "summary": "Over the past months, I have adopted a practical and developer-friendly approach to personal finance management by leveraging my daily tools: Neovim, GitHub Copilot, and a system of monthly ledger books in Markdown.",
+    "link": "/blog/build-your-ledger-into-neovim",
+    "uid": "blog-build-your-ledger-into-neovim",
+    "slug": "build-your-ledger-into-neovim",
+    "publishedAt": "2025-06-31",
+    "tags": [
+      "fiances",
+      "learning",
+      "productivity"
+    ],
+    "author": "Yan Fernandes",
+    "readingTime": "3 min read"
+  },
+  {
+    "title": "My expectations to 2025",
+    "description": "A guide on exporting metadata from MDX files to leverage Next.js SEO features.",
+    "summary": "New year expectations",
+    "link": "/blog/2025-roadmap",
+    "uid": "blog-2025-roadmap",
+    "slug": "2025-roadmap",
+    "publishedAt": "2024-12-27",
+    "tags": [
+      "review",
+      "new year"
+    ],
+    "author": "Yan Fernandes",
+    "readingTime": "2 min read"
+  },
+  {
+    "title": "Notes For Building RBAC ABAC Auth Microservice",
+    "description": "Annotations from building a single authentication microservice for RBAC and ABAC access control",
+    "summary": "Annotations from building a single authentication microservice for RBAC and ABAC access control",
+    "link": "/blog/notes-for-building-RBAC-ABAC-microservice",
+    "uid": "blog-notes-for-building-RBAC-ABAC-microservice",
+    "slug": "notes-for-building-RBAC-ABAC-microservice",
+    "publishedAt": "2024-11-28",
+    "tags": [
+      "zettelkasten",
+      "system design"
+    ],
+    "author": "Yan Fernandes",
+    "readingTime": "6 min read"
+  },
+  {
+    "title": "Nvim cheat sheet",
+    "description": "An useful cheat sheet for fast navigation in Neovim",
+    "summary": "A quick reference for efficient navigation and editing in Neovim.",
+    "link": "/blog/nvim-cheat-sheet",
+    "uid": "blog-nvim-cheat-sheet",
+    "slug": "nvim-cheat-sheet",
+    "publishedAt": "2024-11-14",
+    "tags": [
+      "Zettelkasten",
+      "Neovim"
+    ],
+    "author": "Yan Fernandes",
+    "readingTime": "4 min read"
+  },
+  {
+    "title": "Notes to use semantic release",
+    "description": "Annotations from how to use and create a semantic release versioning",
+    "summary": "Annotations from how to use and create a semantic release versioning",
+    "link": "/blog/use-semmantic-release",
+    "uid": "blog-use-semmantic-release",
+    "slug": "use-semmantic-release",
+    "publishedAt": "2024-11-13",
+    "tags": [
+      "Blog Post",
+      "Semantic Release"
+    ],
+    "author": "Yan Fernandes",
+    "readingTime": "3 min read"
+  },
+  {
+    "title": "Getting Started with Vue.js - Bahia Devs Meetup",
+    "description": "These are my notes from a presentation on Vue.js that I had during the weekly open-coding session of Bahia Devs.",
+    "summary": "These are my notes from a presentation on Vue.js that I had during the weekly open-coding session of Bahia Devs.",
+    "link": "/blog/learning-vue-bahiadevs",
+    "uid": "blog-learning-vue-bahiadevs",
+    "slug": "learning-vue-bahiadevs",
+    "publishedAt": "2024-08-19",
+    "tags": [
+      "programming",
+      "vuejs",
+      "javascript",
+      "frontend"
+    ],
+    "author": "Yan Fernandes",
+    "readingTime": "7 min read"
+  },
+  {
+    "title": "How to Never Forget: Mastering the Art of Retaining Knowledge",
+    "description": "A Copy from my Dev.to Article about how to remember everything from the books you read usign Obsidian and Zettelkasten",
+    "summary": "Learn how to export metadata from MDX files for enhanced SEO and social sharing features in Next.js applications.",
+    "link": "/blog/how-to-never-forget",
+    "uid": "blog-how-to-never-forget",
+    "slug": "how-to-never-forget",
+    "publishedAt": "2024-08-01",
+    "tags": [
+      "obsidian",
+      "zettelkasten",
+      "learning",
+      "books"
+    ],
+    "author": "Yan Fernandes",
+    "readingTime": "5 min read"
+  },
+  {
+    "title": "Becoming Smart: The No-Nonsense Guide",
+    "description": "You don’t need 12 years of school + 4 years of college + 6 years of graduate school to become smart.",
+    "summary": "You don’t need 12 years of school + 4 years of college + 6 years of graduate school to become smart.",
+    "link": "/blog/becoming-smart-non-sense-guide",
+    "uid": "blog-becoming-smart-non-sense-guide",
+    "slug": "becoming-smart-non-sense-guide",
+    "publishedAt": "2024-07-31",
+    "tags": [
+      "becoming smart",
+      "learning",
+      "books",
+      "productivity"
+    ],
+    "author": "Yan Fernandes",
+    "readingTime": "5 min read"
+  },
+  {
+    "title": "How to start taking notes with Obsidian",
+    "description": "This is my Blog post About how to start taking notes with Obsidian",
+    "summary": "Learn how to export metadata from MDX files for enhanced SEO and social sharing features in Next.js applications.",
+    "link": "/blog/how-to-start-taking-notes",
+    "uid": "blog-how-to-start-taking-notes",
+    "slug": "how-to-start-taking-notes",
+    "publishedAt": "2024-06-05",
+    "tags": [
+      "obsidian",
+      "zettelkasten"
+    ],
+    "author": "Yan Fernandes",
+    "readingTime": "1 min read"
+  },
+  {
+    "title": "Blockchain Scalability, Performance, and Transaction Time: The Trilemma",
+    "description": "A comprehensive exploration of the interplay between scalability, performance, and transaction time in major blockchains, including consensus mechanisms and real-world throughput comparisons.",
+    "summary": "This document summarizes the challenges and solutions related to scalability, performance, and transaction time in blockchain systems, analyzing leading networks and consensus methods.",
+    "link": "/blog/blockchain-trylema",
+    "uid": "blog-blockchain-trylema",
+    "slug": "blockchain-trylema",
+    "publishedAt": "2024-01-10",
+    "tags": [
+      "blockchain",
+      "scalability",
+      "performance",
+      "consensus"
+    ],
+    "author": "Yan Fernandes",
+    "readingTime": "7 min read"
+  }
+]
