@@ -4,8 +4,10 @@ const withMDX = nextMDX({
   extension: /\.mdx?$/,
 })
 
-export default withMDX({
+const nextConfig = withMDX({
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-  // Railway deployment settings
-  output: 'standalone',
+  // Cloudflare uses a different build process via OpenNext
+  // No need for 'output: standalone'
 })
+
+export default nextConfig

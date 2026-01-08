@@ -1,0 +1,31 @@
+name = "portifolio"
+main = ".open-next/worker.js"
+compatibility_date = "2026-01-08"
+compatibility_flags = [
+  "nodejs_compat",
+  "global_fetch_strictly_public"
+]
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[[services]]
+binding = "WORKER_SELF_REFERENCE"
+service = "portifolio"
+
+# R2 bucket for Next.js caching (ISR support)
+# Enable this after creating R2 bucket in Cloudflare dashboard
+# Benefits: Incremental Static Regeneration, on-demand revalidation
+# Setup guide: See docs/ADVANCED-CLOUDFLARE.md
+# [[r2_buckets]]
+# binding = "NEXT_INC_CACHE_R2_BUCKET"
+# bucket_name = "portifolio-cache"
+
+# Image optimization
+[images]
+binding = "IMAGES"
+
+# Environment variables
+[vars]
+SITE_URL = "https://indianboy.sh"
