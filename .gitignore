@@ -46,3 +46,6 @@ next-env.d.ts
 .dev.vars
 wrangler.toml.lock
 cloudflare-env.d.ts
+
+# compiled blog posts (generated at build time)
+lib/compiled-posts/

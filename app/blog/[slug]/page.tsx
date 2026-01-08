@@ -1,15 +1,7 @@
 import { notFound } from 'next/navigation'
 import { getBlogPost, getBlogPosts } from '@/lib/blog'
 import { Metadata } from 'next'
-import { MDXRemote } from 'next-mdx-remote/rsc'
-
-// Import plugins
-import remarkGfm from 'remark-gfm'
-import remarkMath from 'remark-math'
-import rehypeKatex from 'rehype-katex'
-import rehypePrism from 'rehype-prism-plus/all'
 import { useMDXComponents } from '@/mdx-components'
-// import rehypeMermaid from 'rehype-mermaid'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -35,8 +27,12 @@ export default async function BlogPost({ params }: Props) {
   const post = await getBlogPost(slug)
   if (!post) notFound()
 
-  // Content is already bundled in the post object from JSON metadata
-  // No filesystem access needed - compatible with Cloudflare Workers
+  // Dynamically import the pre-compiled MDX module
+  // This avoids runtime eval() which is blocked in Cloudflare Workers
+  const CompiledMDX = await import(`@/lib/compiled-posts/${slug}.js`).then(
+    (mod) => mod.default,
+  )
+
   return (
     <article className="max-w-none">
       <header className="mb-8 space-y-4">
@@ -45,16 +41,7 @@ export default async function BlogPost({ params }: Props) {
         </h1>
       </header>
 
-      <MDXRemote
-        source={post.content || ''}
-        options={{
-          mdxOptions: {
-            remarkPlugins: [remarkGfm, remarkMath],
-            rehypePlugins: [rehypeKatex, rehypePrism], // sem rehypeMermaid aqui
-          },
-        }}
-        components={useMDXComponents({})} // passe seus componentes personalizados
-      />
+      <CompiledMDX components={useMDXComponents({})} />
     </article>
   )
 }
