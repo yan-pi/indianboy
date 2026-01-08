@@ -34,6 +34,7 @@ export interface BlogPost {
   author?: string
   image?: string
   readingTime?: string
+  content?: string // Raw MDX content bundled at build time
 }
 
 export interface SocialLink {
@@ -61,4 +62,3 @@ export interface ConnectSectionProps extends SectionProps {
   email: string
   socialLinks: SocialLink[]
 }
-

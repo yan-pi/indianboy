@@ -1,9 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getBlogPost, getBlogPosts } from '@/lib/blog'
 import { Metadata } from 'next'
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 
 // Import plugins
@@ -38,11 +35,8 @@ export default async function BlogPost({ params }: Props) {
   const post = await getBlogPost(slug)
   if (!post) notFound()
 
-  const blogDir = path.join(process.cwd(), 'app', 'blog', 'posts')
-  const mdxPath = path.join(blogDir, `${slug}.mdx`)
-  const fileContent = fs.readFileSync(mdxPath, 'utf-8')
-  const { content } = matter(fileContent)
-
+  // Content is already bundled in the post object from JSON metadata
+  // No filesystem access needed - compatible with Cloudflare Workers
   return (
     <article className="max-w-none">
       <header className="mb-8 space-y-4">
@@ -52,7 +46,7 @@ export default async function BlogPost({ params }: Props) {
       </header>
 
       <MDXRemote
-        source={content}
+        source={post.content || ''}
         options={{
           mdxOptions: {
             remarkPlugins: [remarkGfm, remarkMath],

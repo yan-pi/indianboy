@@ -16,47 +16,14 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 }
 
 /**
- * Gets a single blog post by slug
+ * Gets a single blog post by slug from pre-generated metadata JSON
+ * This avoids filesystem access at runtime, making it compatible with Cloudflare Workers
  * @param slug The blog post slug
  * @returns Promise<BlogPost | null> The blog post or null if not found
  */
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
-  const blogDir = path.join(process.cwd(), 'app', 'blog', 'posts')
-  const mdxPath = path.join(blogDir, `${slug}.mdx`)
-
-  try {
-    if (!fs.existsSync(mdxPath)) {
-      return null
-    }
-
-    const fileContent = fs.readFileSync(mdxPath, 'utf-8')
-    const { data: frontmatter, content } = matter(fileContent)
-
-    if (!frontmatter.title || !frontmatter.publishedAt) {
-      return null
-    }
-
-    const wordCount = content.trim().split(/\s+/).length
-    const readingTime = Math.ceil(wordCount / 200)
-
-    return {
-      title: frontmatter.title,
-      description:
-        frontmatter.description || frontmatter.summary || 'Blog post',
-      summary: frontmatter.summary || frontmatter.description,
-      link: `/blog/${slug}`,
-      uid: generateUID(slug),
-      slug,
-      publishedAt: frontmatter.publishedAt,
-      tags: frontmatter.tags || [],
-      author: frontmatter.author,
-      image: frontmatter.image,
-      readingTime: `${readingTime} min read`,
-    }
-  } catch (error) {
-    console.error(`Failed to read blog post: ${slug}`, error)
-    return null
-  }
+  const post = blogMetadata.find((p) => p.slug === slug)
+  return post || null
 }
 
 /**
