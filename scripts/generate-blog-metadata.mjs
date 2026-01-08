@@ -53,6 +53,7 @@ try {
         author: frontmatter.author,
         image: frontmatter.image,
         readingTime: `${readingTime} min read`,
+        content: content.trim(), // Bundle raw MDX content for runtime compilation
       })
 
       console.log(`✓ Processed: ${file}`)
