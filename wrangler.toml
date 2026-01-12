@@ -6,6 +6,12 @@ compatibility_flags = [
   "global_fetch_strictly_public"
 ]
 
+# Custom domain routes
+routes = [
+  { pattern = "indianboy.sh/*", custom_domain = true },
+  { pattern = "www.indianboy.sh/*", custom_domain = true }
+]
+
 [assets]
 directory = ".open-next/assets"
 binding = "ASSETS"
@@ -29,3 +35,11 @@ binding = "IMAGES"
 # Environment variables
 [vars]
 SITE_URL = "https://indianboy.sh"
+
+# Observability and logging
+[observability]
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+invocation_logs = true
+persist = true
