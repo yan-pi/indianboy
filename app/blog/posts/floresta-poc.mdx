@@ -1,0 +1,560 @@
+---
+title: 'Floresta POC: Building a Forest Monitoring Prototype'
+description: 'A proof of concept for monitoring forest environments using modern web technologies.'
+publishedAt: '2026-01-10'
+tags: ['floresta', 'POC', 'environment', 'monitoring']
+author: 'Yan Fernandes'
+summary: 'This post details the development and insights from the Floresta proof of concept, focusing on environmental monitoring and data visualization.'
+---
+# Vinteum Bitcoin Developer Launchpad - PoC Logbook
+
+alumni: Yan Fernandes
+
+This logbook documents my journey through the Vinteum Bitcoin Developer Launchpad PoC. It captures my daily progress, challenges faced, solutions implemented, and reflections on the learning process.
+
+## 25-Dec-2025
+
+Well, today **25-Dec-2025** , so it's Christmas! I'm starting my Vinteum Bitcoin Developer Launchpad PoC. My bachelor's thesis was approved. I have taken this time to clear my mind and begin working on my PoC with a fresh perspective.
+
+This is my PoC:
+
+_"Implement support in Floresta for tracking incoming silent payments in a watch only wallet as new blocks are processed, inspired by Bitcoin Core’s ongoing design work for silent payments. This PoC focuses only on the “forward scanning” path: given the wallet’s silent payment keys, hook into Floresta’s block processing pipeline, derive and cache the data needed to recognize relevant outputs, and scan each new block to detect matches, updating a lightweight index of received payments. Additionally, the electrum server should be updated with the new silent-payments related endpoints to allow wallet interoperability. The goal is to allow Floresta users to connect their silent payments and find their balances."_
+
+Ok, I think we can start to break down the task and the deliverables regarding the PoC.
+
+1. **Understanding Silent Payments**: Research and understand the silent payments mechanism in Bitcoin Core. Review the relevant documentation and design proposals to grasp how silent payments work and how they are implemented.
+
+2. **Familiarization with Floresta**: Dive into the Floresta codebase to understand its architecture, especially the block processing pipeline and wallet management components. Identify where modifications will be needed to support silent payments.
+
+3. **Deriving Silent Payment Keys**: Implement functionality to derive silent payment keys from the wallet's existing keys. This will involve understanding the key derivation process and ensuring that the derived keys are stored securely.
+
+4. **Block Processing Integration**: Hook into Floresta's block processing pipeline to enable scanning of new blocks for outputs that match the derived silent payment keys. This will require modifying the block processing logic to include the new scanning functionality.
+
+I've get into the Floresta Discord channel if i need any help regarding the codebase or implementation details.
+
+## 26-Dec-2025
+
+My research strategy for this PoC will involve a combination of active exploration and guided research with AI tools. I plan to use AI assistants to help me quickly gather information, clarify concepts. Additionally, I will actively explore the [Floresta Codebase](https://github.com/vinteumorg/Floresta), Bitcoin Core documentation and [BIPs Repository](https://github.com/bitcoin/bips/tree/master) to gain a deeper understanding of the systems involved.
+
+1. So, i will use [Grok](https://grok.com/share/c2hhcmQtNA_a97476f0-7f9c-4d78-870c-7cec1f622be0) on search feature to gather information about silent payments in Bitcoin Core, how it works, and what is the current state of its implementation, i only want the links that i should view, and not the actual explanation. I will also look for any existing discussions or proposals related to silent payments to understand the design considerations.
+
+2. Next i will fork and clone the [Floresta Repo](https://github.com/vinteumorg/Floresta) to my local development environment. I will set up the necessary dependencies and build the project to ensure that I can run and test the code.
+
+Searching for Silent Payments and exploring floresta codebase, discord, and documentation, found this resources that will be helpful for my PoC:
+
+### About Silent Payments
+
+Researching BIPs related to Silent Payments and Taproot, I found the following:
+
+#### Approved BIPs Related to Silent Payments and Taproot
+
+- [x] [BIP-341](https://en.bitcoin.it/wiki/BIP_0341) - Taproot: SegWit version 1 spending rules. Final and active since 2021; introduces SegWit v1 outputs with Merkle branches for hidden scripts, enhancing privacy and efficiency, though debates persist on quantum resistance without further tweaks.
+
+- [x] [BIP-340](https://en.bitcoin.it/wiki/BIP_0340) - Schnorr Signatures for secp256k1. Final and active since 2021; provides 64-byte signatures with linearity for multisig aggregation, widely used in Taproot spends, but some discussions highlight potential for cross-input aggregation in future upgrades.
+
+- [ ] [BIP-352](https://en.bitcoin.it/wiki/BIP_0352) - Silent Payments: Proposed status as of 2026; enables static addresses for private, non-interactive payments using ECDH tweaks and Taproot outputs, with implementations in wallets like Cake Wallet and Floresta showing real-world adoption for privacy-focused use cases.
+
+**Abstract and Motivation**: _"BIP-352, authored by josibake and Ruben Somsen, proposes static addresses (e.g., sp1q prefix) for private payments without interaction or on-chain notifications. It addresses address reuse risks by deriving unique Taproot outputs via ECDH shared secrets from sender inputs and receiver keys. Motivation includes eliminating metadata leaks in traditional notifications, supporting labels for differentiation, and compatibility with CoinJoin for enhanced privacy."_
+
+**Specification Highlights**:
+
+- **Address Format**:
+  Bech32m-encoded com chaves de scan ($B_{\text{scan}}$) e spend ($B_{\text{spend}}$);
+  labels fazem tweak:
+  $$B_m = B_{\text{spend}} + \bigl(\operatorname{hash}(B_{\text{scan}} \Vert m)\bigr)\,G.$$
+
+- **Sender Process**:
+  Somar chaves privadas de entrada:
+  $$a = \sum_i a_i.$$
+  Calcular `input_hash` a partir do menor outpoint:
+  $$h_{\text{in}} = \operatorname{hash}(\min(\text{outpoints})).$$
+  Derivar segredo ECDH:
+  $$\text{shared\_secret} = h_{\text{in}} \cdot a \cdot B_{\text{scan}}.$$
+  Tweak para saídas:
+  $$t_k = \operatorname{hash}(\text{shared\_secret} \Vert k), \qquad
+  P = B_m + t_k \, G.$$
+
+- **Receiver Process**:
+  Escanear transações elegíveis (saídas Taproot e entradas suportadas),
+  somar chaves públicas:
+  $$A = \sum_j A_j.$$
+  Computar segredos e casar saídas tweakadas conforme:
+  $$P \stackrel{?}{=} B_m + t_k G.$$
+  Suporta light clients via filtros BIP-158 ou índices.
+
+- **Security**:
+  Baseado em ECDLP; separa chaves de scan/spend; compatível com CoinJoin com ressalvas
+  (somar entradas do mesmo ente).
+
+- **Backup/Recovery**:
+  Seed-based, porém requer varredura de UTXOs pós-recuperação.
+
+**Rationale and Compatibility**: Balances privacy with scanning costs (~30–50 MB/month for light clients per 2024 estimates). Backward-compatible as a new address type; upgrades via versions (e.g., v1 for expiration).
+
+**2026 Status**: Remains Proposed; no activation, but wallet support grows (e.g., Cake Wallet, Dana, BlueWallet). 2025 updates clarified zero-sum cases; X discussions highlight scanning optimizations for mobile/full nodes. Relevance to PoC: Core for Floresta's watch-only wallet—integrate into Utreexo for efficient, private validation.
+
+Silent Payments (BIP-352) builds on this for non-interactive privacy, using elliptic curve Diffie-Hellman (ECDH) to derive unique outputs per transaction.
+
+#### Draft and Rejected BIPs Related to Silent Payments and Taproot
+
+Found these BIPs that are in draft or rejected status, but are related to Silent Payments and Taproot, im putting them here just to inform but does not necessary relate directly to my PoC:
+
+- [BIP-114](https://en.bitcoin.it/wiki/BIP_0114) - Merkelized Abstract Syntax Tree. Rejected; aimed at Merkle trees for selective script revelation
+- [BIP-117](https://en.bitcoin.it/wiki/BIP_0117) - Tail Call Execution Semantics. Draft; proposes subscript execution for generalized MAST
+- [BIP-118](https://en.bitcoin.it/wiki/BIP_0118) - SIGHASH_ANYPREVOUT for Taproot Scripts. Draft; allows dynamic UTXO binding for off-chain protocols like eltoo
+
+### About Floresta
+
+- [x] [Floresta GitHub Repository](https://github.com/vinteumorg/Floresta) - The main codebase for Floresta, an Electrum Server implementation powered by Utreexo.
+- [x] [Afinal, o que é Schnorr?](https://medium.com/@davidsonlucassouza/afinal-o-que-%C3%A9-schnorr-6ad50bf66097) - by Davidson Souza on Medium
+- [x] [Floresta Update Vinteum medium Post](https://medium.com/vinteum-org/floresta-update-simplifying-bitcoin-node-integration-for-wallets-6886ea7c975c)
+
+  "If you run a node, you’re the server, so you’re not leaking any information to an untrusted third party. Floresta uses [BIP-158](https://en.bitcoin.it/wiki/BIP_0158) compact block filters to search for your wallet’s historical transactions and monitor new blocks. Everything is done locally."
+
+- [x] [Introducing Floresta, a Utreexo-powered Electrum Server implementation](https://medium.com/vinteum-org/introducing-floresta-an-utreexo-powered-electrum-server-implementation-60feba8e179d) - by Vinteum on Medium
+
+## 27-Dec-2025
+
+Today i started to explore the Floresta codebase, and Read the floresta-docs repository
+
+- [x] [Floresta Documentation Book](https://github.com/JoseSK999/floresta-docs) - by JoseSK999 on the Floresta Discord server.
+
+- Issue with floresta-docs libraries:
+  - Compilation fails due to dependency error between libraries.
+  - mdbook is at version v0.5.2, but mdbook-quiz only supports version 0.4.45.
+  - Reported the problem on the Floresta Discord.
+  - Considered opening a PR to update mdbook, but the issue is with the dependency cycle.
+  - mdbook-quiz needs to be updated to support newer mdbook versions.
+  - Created an [issue in the mdbook-quiz repo](https://github.com/cognitive-engineering-lab/mdbook-quiz/issues/61).
+  - Opened a [PR in floresta-docs](https://github.com/JoseSK999/floresta-docs/pull/2) to lock mdbook version to 0.4.45, allowing compilation.
+  - willcrichton, mdbook-quiz maintainer, responded positively to the issue. But he does not have time to work into this issue (So, I thought that since im already planing to contribute to Floresta, I can help with this too).
+  - Ive opened a [PR in mdbook-quiz](https://github.com/cognitive-engineering-lab/mdbook-quiz/pull/62/commits/3de0657b76f5cbeca9aaf5ced156adbe5786bc5c) adding support for mdbook v0.5.2. (Ive used AI into this one to only explore and understand the codebase, since i did not have the time to understand certain dependencies and implementations of the codebase)
+  - GitHub has added an experimental feature that sets Copilot to review every PR opened in a repository, so it comments a lot of sloppy suggestions on the PRs I've opened.
+
+## 30-Dec-2025
+
+Anotations about Reading Floresta Book:
+
+1. Binaries:
+
+- florestad - deamon (node) that connects to Bitcoin Core and serves Electrum protocol requests.
+- florestacli - CLI tool to interact with Floresta server.
+
+2. Components:
+
+- floresta-chain
+- floresta-wire
+- floresta common:
+  1. floresta-watch-only (Probably this one is what I will be working the most on)
+  2. floresta-compact-filters
+  3. floresta-electrum
+
+3. Creates:
+
+floresta -> Export components
+floresta-rpc -> Powers floresta-cli
+floresta-node -> Implements node features assembling all the components
+
+## 05-Jan-2026
+
+Today I participated in office hours with Davidson Souza, where he explained more about how Floresta works and the current progress of the project.  
+JoaoLeal asked about how Floresta works with the aggregation feature. Davidson explained how Floresta leaves work, and how Floresta uses Merkle trees to represent UTXOs.
+
+### Merkle Trees and UTXO Representation in Floresta
+
+- **Accumulator Operations:**  
+  Floresta uses accumulator operations in Merkle trees, similar to those in Utreexo. These operations include:
+  - **Addition:** Adding new UTXOs to the tree.
+  - **Insertion:** Placing new nodes at specific positions.
+  - **Deletion:** Removing spent UTXOs from the tree.
+
+- **Key Concepts and Terminology:**
+  - **Index:** The position of a node within the tree.
+  - **Root:** The topmost node representing the entire set of UTXOs.
+  - **Intermediary Node:** Nodes that connect leaves to the root, helping maintain the tree structure.
+  - **Leaf Node:** Represents individual UTXOs.
+  - **Bridge Node:** Connects different parts of the tree, facilitating efficient updates.
+  - **Data:** The actual information stored in each node (e.g., UTXO data).
+  - **Sum:** (If applicable) Used for aggregating values across nodes for quick calculations.
+
+#### Example Operations
+
+- **Addition/Insertion:**  
+  When a new UTXO is created, it is added as a leaf node. The tree is updated, and the root hash changes to reflect the new state.
+
+- **Deletion:**  
+  When a UTXO is spent, its corresponding leaf node is deleted. The tree is rebalanced, and the root hash is updated.
+  
+  (At least this was my understanding of how it works, I will need to dive deeper into the codebase to understand exactly how Floresta implements these operations.)
+
+## 08-Jan-2026
+
+Ive already read the floresta docs book and started exploring the codebase
+
+### Codebase Architecture Analysis
+
+#### 1. Watch-Only Wallet Structure
+**Location:** `crates/floresta-watch-only/src/lib.rs`
+
+**Key Components Discovered:**
+
+1. **AddressCache** - Main wallet structure
+   - Wraps `AddressCacheInner` with Arc<RwLock<>>
+   - Implements `BlockConsumer` trait (line 558)
+   - Currently returns `wants_spent_utxos() = false`
+
+2. **Database Abstraction** - `AddressCacheDatabase` trait
+   - Two implementations: `KvDatabase` (persistent), `MemoryDatabase` (testing)
+   - Stores: addresses, transactions, stats, UTXOs
+   - Methods: save, load, update, get_cache_height, save_transaction, etc.
+
+3. **Data Structures:**
+   ```rust
+   pub struct CachedAddress {
+       script_hash: Hash,
+       balance: u64,
+       script: ScriptBuf,
+       transactions: Vec<Txid>,
+       utxos: Vec<OutPoint>,
+   }
+   
+   pub struct CachedTransaction {
+       tx: Transaction,
+       height: u32,
+       merkle_block: Option<MerkleProof>,
+       hash: Txid,
+       position: u32,
+   }
+   
+   pub struct Stats {
+       address_count: usize,
+       transaction_count: usize,
+       utxo_count: usize,
+       cache_height: u32,
+       txo_count: usize,
+       balance: u64,
+       derivation_index: u32,
+   }
+   ```
+
+**Critical Insight:** The `Stats` struct will need extension for silent payment data:
+- `sp_output_count`
+- `sp_balance`
+- `sp_label_count`
+
+#### 2. Block Processing Flow
+
+**Current Implementation (lib.rs:182-239):**
+```rust
+fn block_process(&mut self, block: &Block, height: u32) -> Vec<(Transaction, TxOut)> {
+    // 1. Iterate through all transactions
+    // 2. Check inputs for spends (matching our UTXOs)
+    // 3. Check outputs for receives (matching our script_set)
+    // 4. Cache matching transactions
+}
+```
+
+**Pattern:**
+- Uses `HashSet<sha256::Hash>` for script lookups
+- Stores both spends and receives
+- Returns all relevant transaction/output pairs
+
+**SP Integration Point:** I think I can extend this method or create parallel `scan_silent_payments()` method.
+
+#### 3. BlockConsumer Trait
+
+**Location:** `crates/floresta-chain/src/pruned_utreexo/chain_state.rs:66-109`
+
+```rust
+pub trait BlockConsumer: Sync + Send + 'static {
+    fn wants_spent_utxos(&self) -> bool;
+    fn on_block(&self, block: &Block, height: u32, 
+                spent_utxos: Option<&HashMap<OutPoint, UtxoData>>);
+}
+```
+
+**Key Discovery:** 
+- ChainState computes spent UTXOs during validation
+- Passed to consumers via `on_block()` if `wants_spent_utxos() == true`
+
+**Current AddressCache implementation:**
+```rust
+impl BlockConsumer for AddressCache {
+    fn wants_spent_utxos(&self) -> bool { false }  // Probably Need to change this!
+    fn on_block(&self, block: &Block, height: u32, _spent_utxos: Option<...>) {
+        self.block_process(block, height);
+    }
+}
+```
+
+**Decision Point:** Might Change `wants_spent_utxos()` to return `true` when SP keys are loaded.
+
+
+### Dependencies Analysis
+
+**Current Crypto Stack (from Cargo.toml):**
+```toml
+bitcoin = "0.32"          # Includes secp256k1 v0.29.1
+bitcoin_hashes = "0.14"   # SHA256, etc.
+bech32 = "0.11"           # For address encoding
+sha2 = "0.10"             # Direct SHA2 dependency
+```
+
+**Finding**: All crypto primitives needed for BIP-352 are already available:
+- secp256k1 for ECDH
+- SHA256 for hashing
+- bech32m for address encoding (BIP-350)
+- Point arithmetic for tweaking
+
+**Decision:** We are going to use the existing dependencies, no new crypto libraries needed.
+
+**Trade-off:** Slightly more manual implementation work, but:
+- No version conflicts (less dependency bloat, or dependency hell)
+- No new security audit surface
+- Less supply-chain vulnerabilities risk
+- Better understanding of BIP-352
+- Full control over implementation
+- And this is actually the goal of this PoC! :)
+
+---
+
+### Error Handling Patterns
+
+**Pattern Used in Floresta:**
+- Custom error enums (no `thiserror` except in floresta-electrum)
+- `impl_error_from!` macro for conversions
+- Specific, descriptive error variants
+
+**Example from watch-only:**
+```rust
+pub enum WatchOnlyError<DatabaseError: fmt::Debug> {
+    WalletNotInitialized,
+    TransactionNotFound,
+    DatabaseError(DatabaseError),
+}
+```
+
+**Plan:** Create `SilentPaymentError` following this exact pattern.
+
+---
+
+### Testing Infrastructure Discovered
+
+**Code Patterns:**
+
+1. **Inline Tests:** `#[cfg(test)] mod tests`
+2. **Test Data:** Separate `testdata/` directories
+3. **Compression:** Uses `.zst` for large binary test data
+4. **JSON Vectors:** For structured test cases
+5. **Helper Macros:** `assert_ok!`, `assert_err!`, `bhash!`
+
+**Example Pattern:**
+```rust
+#[test]
+fn test_with_vectors() {
+    let data = include_str!("../testdata/vectors.json");
+    let cases: Vec<TestCase> = serde_json::from_str(data).unwrap();
+    for case in cases {
+        // Test each case
+    }
+}
+```
+
+**Plan:** I think we can Download BIP-352 related test vectors and use same pattern.
+
+---
+
+### Architecture Decisions
+
+#### Decision 1: Integration vs Separate Crate
+
+**Choice:** Integrate into `floresta-watch-only`
+
+**Rationale:**
+1. Silent payments ARE wallet functionality (receiving funds)
+2. Reuse existing infrastructure:
+   - Database abstraction
+   - Transaction caching
+   - Merkle proof storage
+   - UTXO index
+3. Simpler user experience (one wallet component)
+4. Single rescan operation
+5. Follows Floresta's modular-but-integrated pattern
+
+**Trade-offs:**
+- Couples SP to wallet (acceptable - conceptually related)
+- Less code duplication
+- Shared balance tracking
+- Consistent backup/recovery
+
+#### Decision 2: Dependency Strategy 
+
+**Choice:** Use existing `bitcoin` crate primitives
+
+**Rationale:**
+1. All needed crypto already present
+2. No version conflicts
+3. No new security surface
+4. Follows Floresta's "no custom crypto" principle
+5. Better BIP-352 understanding through manual implementation
+
+**Alternative Considered:** `rust-silentpayments` crate
+- Reference implementation available
+- Additional dependency
+- Potential version conflicts with secp256k1
+- **Decision:** Use as reference, don't depend on it
+
+#### Decision 3: BlockConsumer Strategy
+**Choice:** Modify AddressCache to request spent UTXOs conditionally
+
+**Implementation Plan:**
+```rust
+impl BlockConsumer for AddressCache {
+    fn wants_spent_utxos(&self) -> bool {
+        // Return true if SP keys are loaded
+        self.has_silent_payment_keys()
+    }
+    
+    fn on_block(&self, block: &Block, height: u32, 
+                spent_utxos: Option<&HashMap<OutPoint, UtxoData>>) {
+        // Call regular scanning
+        self.block_process(block, height);
+        
+        // If SP enabled and spent_utxos provided
+        if let Some(utxos) = spent_utxos {
+            self.scan_silent_payments(block, height, utxos);
+        }
+    }
+}
+```
+
+**Rationale:**
+- ChainState already computes spent UTXOs
+- Free performance (no extra lookups needed)
+- Clean integration point
+- Backward compatible (only active when SP keys present)
+
+---
+
+### Project Structure Plan
+
+**New Files to Create:**
+
+This is what im thinking to build the silent payments module inside floresta-watch-only:
+
+```
+crates/floresta-watch-only/
+├── src/
+│   ├── silent_payments/       # New module
+│   │   ├── mod.rs             # Public API & integration
+│   │   ├── bip352.rs          # Core BIP-352 spec implementation
+│   │   ├── scanner.rs         # Block scanning logic
+│   │   ├── keys.rs            # Key derivation & management
+│   │   ├── labels.rs          # Label computation & caching
+│   │   ├── database.rs        # Database extensions
+│   │   └── error.rs           # SP-specific errors
+│   └── lib.rs                 # (modify - add module)
+├── testdata/
+│   └── bip352/
+│       ├── send_and_receive_test_vectors.json
+│       └── README.md          # Attribution
+```
+
+**Modified Files:**
+```
+crates/floresta-watch-only/Cargo.toml  # Add feature flag
+crates/floresta-watch-only/src/lib.rs  # Import SP module
+crates/floresta-watch-only/src/kv_database.rs  # Extend for SP
+```
+
+
+### Next Day Gloals:
+
+1. **Run Floresta on Signet** 
+   - Start node with debug logging
+   - Observe IBD process
+   - Monitor resource usage
+   - Document block processing flow
+
+2. **Explore Live Behavior**
+   - Watch logs in real-time
+   - Test RPC commands
+   - Examine created database files
+   - Understand data directory structure
+
+3. **Test Watch-Only Wallet**
+   - Load a test descriptor
+   - Trigger rescan
+   - Observe transaction detection
+   - Document wallet behavior
+
+4. **Analyze Block Structure**
+   - Get blocks with taproot outputs
+   - Examine witness data
+   - Identify SP-eligible transactions
+   - Document input type distribution
+
+### Technical Insights Gained Today
+
+1. **BlockConsumer might be the Perfect Hook**
+   - Clean abstraction for receiving blocks
+   - Spent UTXOs available on request
+   - ZMQ server uses same pattern (reference)
+
+2. **Floresta internal Database is Easily Extensible**
+   - Trait-based design
+   - KV store buckets
+   - Can add SP-specific buckets: `sp_keys`, `sp_labels`, `sp_outputs`
+
+3. **Transaction Caching is Robust**
+   - Already handles merkle proofs
+   - Stores tx height and position
+   - Can reuse for SP outputs
+
+4. **No Dependency Blockers**
+   - All crypto available
+   - No conflicts
+   - Clean foundation
+
+### Environment Setup
+
+**System Information:**
+- **Rust Version:** 1.89.0 (MSRV: 1.81.0)
+- **Cargo Version:** 1.89.0
+- **Platform:** macOS (aarch64)
+- **Build Status:** Success in 43.11s
+- **Tests:** 9/9 passing in floresta-watch-only
+
+**Key Finding:** Floresta builds cleanly with no warnings, errors or needing any type of workarounds.
+
+
+## 11-Dec-2026
+
+The beginning of the year is always complicated for me—it's a time to wrap up last year's pending tasks and kick off the new year (not to mention participating in festive dates). But now that I have a junior on the Sats team, things have eased up for me a bit.
+
+Get blockchain info via RPC (filter verbose output)
+
+```bash
+$ cargo run --bin floresta-cli -- --network signet getblockchaininfo 2>&1 | grep -v "backtrace\|Stack\|at /" | head -30
+Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.26s
+     Running `target/debug/floresta-cli --network signet getblockchaininfo`
+{
+  "best_block": "000000da7f37a9ad7ab5c48a48423a6934b16f30ea20a2aefa9d4a416dbd96c0",
+  "height": 62000,
+  "ibd": true,
+  "validated": 0,
+  "latest_work": "000000000000000000000000000000000000000000000000000000aef793ddc3",
+  "latest_block_time": 1635540229,
+  "leaf_count": 0,
+  "root_count": 0,
+  "root_hashes": [],
+  "chain": "signet",
+  "progress": 0.0,
+  "difficulty": 2
+}
+```
+
+Headers sync very fast:
+- Started at block 62,000
+- Now at block 172,000 (30 seconds later)
+- Still in IBD, downloading headers
