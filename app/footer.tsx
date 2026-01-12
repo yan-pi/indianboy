@@ -76,7 +76,7 @@ export function Footer() {
         <a href="https://github.com/yan-pi/portifolio" target="_blank">
           <TextLoop className="text-xs text-[var(--color-muted-foreground)]">
             <span>© 2025 Yan Fernandes.</span>
-            <span>I use Arch and Neovim btw.</span>
+            <span>Neovim is the superior code editor.</span>
           </TextLoop>
         </a>
         <div className="text-xs text-[var(--color-muted-foreground)]">
