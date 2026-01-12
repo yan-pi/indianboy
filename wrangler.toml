@@ -8,8 +8,8 @@ compatibility_flags = [
 
 # Custom domain routes
 routes = [
-  { pattern = "indianboy.sh/*", custom_domain = true },
-  { pattern = "www.indianboy.sh/*", custom_domain = true }
+  { pattern = "indianboy.sh", custom_domain = true },
+  { pattern = "www.indianboy.sh", custom_domain = true }
 ]
 
 [assets]
