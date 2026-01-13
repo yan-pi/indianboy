@@ -558,3 +558,19 @@ Headers sync very fast:
 - Started at block 62,000
 - Now at block 172,000 (30 seconds later)
 - Still in IBD, downloading headers
+
+## 12-Jan-2026
+
+Im already Running floresta on Signet, and exploring the logs to understand how the block processing works.
+
+```
+$ cargo run --bin floresta-cli -- --network signet getblockchaininfo 2>&1 | grep -E "\"height\"|\"validated\"|\"ibd\"" | head -5
+"height": 286877,
+  "ibd": false,
+  "validated": 286820,
+```
+
+
+- Total IBD Time: 252 minutes 3.84 seconds = ~4.2 hours (252 minutes)
+- Blocks synced: 286,820 blocks
+- Final disk usage: 819 MB total (211 MB chaindata + 384 MB debug log + 224 MB other)
