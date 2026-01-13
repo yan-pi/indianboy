@@ -59,20 +59,20 @@ Researching BIPs related to Silent Payments and Taproot, I found the following:
 **Specification Highlights**:
 
 - **Address Format**:
-  Bech32m-encoded com chaves de scan ($B_{\text{scan}}$) e spend ($B_{\text{spend}}$);
+  Bech32m-encoded com chaves de scan ($B_{\mathrm{scan}}$) e spend ($B_{\mathrm{spend}}$);
   labels fazem tweak:
-  $$B_m = B_{\text{spend}} + \bigl(\operatorname{hash}(B_{\text{scan}} \Vert m)\bigr)\,G.$$
+  $$B_m = B_{\mathrm{spend}} + \mathrm{hash}(B_{\mathrm{scan}} \mid m) \cdot G$$
 
 - **Sender Process**:
   Somar chaves privadas de entrada:
-  $$a = \sum_i a_i.$$
+  $$a = \sum_i a_i$$
   Calcular `input_hash` a partir do menor outpoint:
-  $$h_{\text{in}} = \operatorname{hash}(\min(\text{outpoints})).$$
+  $$h_{\mathrm{in}} = \mathrm{hash}(\min(\mathrm{outpoints}))$$
   Derivar segredo ECDH:
-  $$\text{shared\_secret} = h_{\text{in}} \cdot a \cdot B_{\text{scan}}.$$
+  $$\mathrm{shared\_secret} = h_{\mathrm{in}} \cdot a \cdot B_{\mathrm{scan}}$$
   Tweak para saídas:
-  $$t_k = \operatorname{hash}(\text{shared\_secret} \Vert k), \qquad
-  P = B_m + t_k \, G.$$
+  $$t_k = \mathrm{hash}(\mathrm{shared\_secret} \mid k)$$
+  $$P = B_m + t_k \cdot G$$
 
 - **Receiver Process**:
   Escanear transações elegíveis (saídas Taproot e entradas suportadas),
@@ -199,7 +199,7 @@ Ive already read the floresta docs book and started exploring the codebase
 **Key Components Discovered:**
 
 1. **AddressCache** - Main wallet structure
-   - Wraps `AddressCacheInner` with Arc<RwLock<>>
+   - Wraps `AddressCacheInner` with `Arc<RwLock<>>`
    - Implements `BlockConsumer` trait (line 558)
    - Currently returns `wants_spent_utxos() = false`
 

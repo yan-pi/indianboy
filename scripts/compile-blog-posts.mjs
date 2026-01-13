@@ -34,6 +34,7 @@ try {
   console.log(`\nFound ${files.length} MDX files to compile\n`)
 
   const compiledPosts = []
+  const failedCompilations = []
 
   for (const file of files) {
     const mdxPath = path.join(blogDir, file)
@@ -66,7 +67,18 @@ try {
         `   ✓ Compiled to: ${path.relative(process.cwd(), outputPath)}`,
       )
     } catch (error) {
-      console.error(`   ✗ Failed to compile ${file}:`, error.message)
+      console.error(`\n❌ Failed to compile ${file}`)
+      console.error(`Error: ${error.message}`)
+      if (error.message.includes('Unexpected character')) {
+        console.error(
+          `\n💡 Tip: This often happens with LaTeX \\text{} commands.`,
+        )
+        console.error(
+          `   Try using \\mathrm{} instead, or use code blocks for formulas.`,
+        )
+      }
+      console.error(`File: ${mdxPath}\n`)
+      failedCompilations.push({ file, error: error.message })
     }
   }
 
@@ -86,6 +98,18 @@ try {
   console.log(
     `📦 Created index file: ${path.relative(process.cwd(), indexPath)}`,
   )
+
+  // Check for failed compilations and exit with error if any
+  if (failedCompilations.length > 0) {
+    console.error(
+      `\n⚠️  ${failedCompilations.length} file(s) failed to compile:`,
+    )
+    failedCompilations.forEach(({ file }) => {
+      console.error(`   - ${file}`)
+    })
+    console.error('\n❌ Build cannot continue with compilation errors.')
+    process.exit(1)
+  }
 } catch (error) {
   console.error('❌ Error compiling blog posts:', error)
   process.exit(1)
