@@ -1,8 +1,8 @@
 ---
-title: 'Floresta POC: Building a Forest Monitoring Prototype'
-description: 'A proof of concept for monitoring forest environments using modern web technologies.'
+title: 'Floresta POC: Building Silent Payments Support in a Watch-Only Wallet'
+description: 'This logbook documents my journey through the Vinteum Bitcoin Developer Launchpad PoC. It captures my daily progress, challenges faced, solutions implemented, and reflections on the learning process.'
 publishedAt: '2026-01-10'
-tags: ['floresta', 'POC', 'environment', 'monitoring']
+tags: ['floresta', 'POC', 'bitcoin', 'vinteumorg', 'silent payments']
 author: 'Yan Fernandes'
 summary: 'This post details the development and insights from the Floresta proof of concept, focusing on environmental monitoring and data visualization.'
 ---
@@ -52,42 +52,50 @@ Researching BIPs related to Silent Payments and Taproot, I found the following:
 
 - [x] [BIP-340](https://en.bitcoin.it/wiki/BIP_0340) - Schnorr Signatures for secp256k1. Final and active since 2021; provides 64-byte signatures with linearity for multisig aggregation, widely used in Taproot spends, but some discussions highlight potential for cross-input aggregation in future upgrades.
 
-- [ ] [BIP-352](https://en.bitcoin.it/wiki/BIP_0352) - Silent Payments: Proposed status as of 2026; enables static addresses for private, non-interactive payments using ECDH tweaks and Taproot outputs, with implementations in wallets like Cake Wallet and Floresta showing real-world adoption for privacy-focused use cases.
+- [x] [BIP-352](https://en.bitcoin.it/wiki/BIP_0352) - Silent Payments: Proposed status as of 2026; enables static addresses for private, non-interactive payments using ECDH tweaks and Taproot outputs, with implementations in wallets like Cake Wallet and Floresta showing real-world adoption for privacy-focused use cases.
 
 **Abstract and Motivation**: _"BIP-352, authored by josibake and Ruben Somsen, proposes static addresses (e.g., sp1q prefix) for private payments without interaction or on-chain notifications. It addresses address reuse risks by deriving unique Taproot outputs via ECDH shared secrets from sender inputs and receiver keys. Motivation includes eliminating metadata leaks in traditional notifications, supporting labels for differentiation, and compatibility with CoinJoin for enhanced privacy."_
 
 **Specification Highlights**:
 
 - **Address Format**:
-  Bech32m-encoded com chaves de scan ($B_{\mathrm{scan}}$) e spend ($B_{\mathrm{spend}}$);
-  labels fazem tweak:
+  Bech32m-encoded with scan ($B_{\mathrm{scan}}$) and spend ($B_{\mathrm{spend}}$) keys;
+
+  labels perform tweak:
   $$B_m = B_{\mathrm{spend}} + \mathrm{hash}(B_{\mathrm{scan}} \mid m) \cdot G$$
 
 - **Sender Process**:
-  Somar chaves privadas de entrada:
+  Sum input private keys:
   $$a = \sum_i a_i$$
-  Calcular `input_hash` a partir do menor outpoint:
+
+  Calculate `input_hash` from the smallest outpoint:
+
   $$h_{\mathrm{in}} = \mathrm{hash}(\min(\mathrm{outpoints}))$$
-  Derivar segredo ECDH:
+
+  Derive ECDH secret:
+
   $$\mathrm{shared\_secret} = h_{\mathrm{in}} \cdot a \cdot B_{\mathrm{scan}}$$
-  Tweak para saídas:
+
+  Tweak for outputs:
+
   $$t_k = \mathrm{hash}(\mathrm{shared\_secret} \mid k)$$
+
   $$P = B_m + t_k \cdot G$$
 
 - **Receiver Process**:
-  Escanear transações elegíveis (saídas Taproot e entradas suportadas),
-  somar chaves públicas:
+  Scan eligible transactions (Taproot outputs and supported inputs),
+  sum public keys:
   $$A = \sum_j A_j.$$
-  Computar segredos e casar saídas tweakadas conforme:
+  Compute secrets and match tweaked outputs as:
   $$P \stackrel{?}{=} B_m + t_k G.$$
-  Suporta light clients via filtros BIP-158 ou índices.
+  Supports light clients via BIP-158 filters or indexes.
 
 - **Security**:
-  Baseado em ECDLP; separa chaves de scan/spend; compatível com CoinJoin com ressalvas
-  (somar entradas do mesmo ente).
+  Based on ECDLP; separates scan/spend keys; compatible with CoinJoin with caveats
+  (summing inputs from the same entity).
 
 - **Backup/Recovery**:
-  Seed-based, porém requer varredura de UTXOs pós-recuperação.
+  Seed-based, but requires UTXO scan after recovery.
 
 **Rationale and Compatibility**: Balances privacy with scanning costs (~30–50 MB/month for light clients per 2024 estimates). Backward-compatible as a new address type; upgrades via versions (e.g., v1 for expiration).
 
