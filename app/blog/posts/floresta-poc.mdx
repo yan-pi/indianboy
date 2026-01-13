@@ -97,10 +97,6 @@ Researching BIPs related to Silent Payments and Taproot, I found the following:
 - **Backup/Recovery**:
   Seed-based, but requires UTXO scan after recovery.
 
-**Rationale and Compatibility**: Balances privacy with scanning costs (~30–50 MB/month for light clients per 2024 estimates). Backward-compatible as a new address type; upgrades via versions (e.g., v1 for expiration).
-
-**2026 Status**: Remains Proposed; no activation, but wallet support grows (e.g., Cake Wallet, Dana, BlueWallet). 2025 updates clarified zero-sum cases; X discussions highlight scanning optimizations for mobile/full nodes. Relevance to PoC: Core for Floresta's watch-only wallet—integrate into Utreexo for efficient, private validation.
-
 Silent Payments (BIP-352) builds on this for non-interactive privacy, using elliptic curve Diffie-Hellman (ECDH) to derive unique outputs per transaction.
 
 #### Draft and Rejected BIPs Related to Silent Payments and Taproot
