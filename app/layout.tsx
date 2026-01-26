@@ -24,6 +24,19 @@ export const metadata: Metadata = {
   },
   description:
     'Yan is a personal blog by IndianBoy, sharing insights on technology, programming, and life experiences.',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://indianboy.sh',
+    siteName: 'indianboy.sh',
+    title: 'Yan Fernandes - indianboy.sh',
+    description: 'Software Engineer | Bitcoin | Open Source',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Yan Fernandes - indianboy.sh',
+    description: 'Software Engineer | Bitcoin | Open Source',
+  },
 }
 
 const geist = Geist({
