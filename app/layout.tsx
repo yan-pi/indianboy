@@ -23,19 +23,19 @@ export const metadata: Metadata = {
     template: '%s | indianboy.sh',
   },
   description:
-    'Yan is a personal blog by IndianBoy, sharing insights on technology, programming, and life experiences.',
+    'This is a personal blog by IndianBoy, sharing insights on technology, programming, and life experiences.',
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://indianboy.sh',
     siteName: 'indianboy.sh',
     title: 'Yan Fernandes - indianboy.sh',
-    description: 'Software Engineer | Bitcoin | Open Source',
+    description: 'Software Engineer | Open Source',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Yan Fernandes - indianboy.sh',
-    description: 'Software Engineer | Bitcoin | Open Source',
+    description: 'Software Engineer | Open Source',
   },
 }
 
@@ -56,12 +56,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <Script
-          src="https://umami-production-42f7.up.railway.app/script.js"
-          data-website-id="0872e48b-b5cf-4175-be8b-b401a27c7085"
-        />
-      </head>
       <body
         className={`${geist.variable} ${geistMono.variable} bg-[color:var(--color-background)] tracking-tight antialiased`}
       >
