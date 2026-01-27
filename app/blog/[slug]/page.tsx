@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { getBlogPost, getBlogPosts } from '@/lib/blog'
 import { Metadata } from 'next'
 import { useMDXComponents } from '@/mdx-components'
+import { BlogComments } from '@/components/blog/blog-comments'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -57,6 +58,8 @@ export default async function BlogPost({ params }: Props) {
       </header>
 
       <CompiledMDX components={useMDXComponents({})} />
+
+      <BlogComments slug={slug} />
     </article>
   )
 }
