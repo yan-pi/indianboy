@@ -51,13 +51,7 @@ function BackButton() {
   const router = useRouter()
 
   const handleBack = () => {
-    // Check if there's internal navigation history
-    const hasInternalHistory =
-      typeof window !== 'undefined' &&
-      document.referrer &&
-      document.referrer.includes(window.location.origin)
-
-    if (hasInternalHistory) {
+    if (typeof window !== 'undefined' && window.history.length > 1) {
       router.back()
     } else {
       router.push('/')
