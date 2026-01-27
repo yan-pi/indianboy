@@ -7,7 +7,7 @@ import {
   INTER_REGULAR_URL,
 } from '@/lib/og/styles'
 
-export const runtime = 'edge'
+export const dynamic = 'force-dynamic'
 export const alt = 'Blog Post - indianboy.sh'
 export const size = OG_SIZE
 export const contentType = 'image/png'
