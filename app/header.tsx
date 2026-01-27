@@ -1,8 +1,16 @@
 'use client'
 import { TextEffect } from '@/components/ui/text-effect'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export function Header() {
+  const pathname = usePathname()
+
+  // Hide header on individual blog post pages
+  if (pathname?.startsWith('/blog/') && pathname !== '/blog') {
+    return null
+  }
+
   return (
     <header className="mb-8 flex items-center justify-between">
       <div>

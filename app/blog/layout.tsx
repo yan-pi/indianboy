@@ -2,6 +2,8 @@
 import { TextMorph } from '@/components/ui/text-morph'
 import { ScrollProgress } from '@/components/ui/scroll-progress'
 import { useEffect, useRef, useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { ArrowLeft } from 'lucide-react'
 
 function CopyButton() {
   const [text, setText] = useState('Copy')
@@ -39,11 +41,29 @@ function CopyButton() {
   )
 }
 
+function BackButton() {
+  const router = useRouter()
+
+  return (
+    <button
+      onClick={() => router.back()}
+      className="flex items-center gap-1 text-sm text-[var(--color-muted-foreground)] transition-colors hover:text-[var(--color-accent)]"
+      type="button"
+    >
+      <ArrowLeft className="h-4 w-4" />
+      <span>Back</span>
+    </button>
+  )
+}
+
 export default function LayoutBlogPost({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const pathname = usePathname()
+  const isBlogPost = pathname?.startsWith('/blog/') && pathname !== '/blog'
+
   return (
     <>
       {/* Header Blur Overlay */}
@@ -55,10 +75,13 @@ export default function LayoutBlogPost({
         springOptions={{ bounce: 0 }}
       />
 
-      {/* Copy URL Button */}
-      <div className="absolute top-24 right-4">
-        <CopyButton />
-      </div>
+      {/* Blog Post Header - Back Arrow + Copy URL */}
+      {isBlogPost && (
+        <div className="mb-8 flex items-center justify-between">
+          <BackButton />
+          <CopyButton />
+        </div>
+      )}
 
       {/* Blog Content */}
       <main className="prose prose-h1:text-2xl prose-h1:font-semibold prose-h2:text-xl prose-h3:text-lg prose-strong:font-medium prose-headings:text-[var(--color-foreground)] prose-p:text-[var(--color-foreground)] prose-code:text-[var(--color-accent)] prose-code:bg-[var(--color-muted)] prose-pre:bg-[var(--color-card)] prose-pre:border prose-pre:border-[var(--color-border)] max-w-none pb-20 [&_a]:!text-[var(--color-primary)] [&_a]:!no-underline [&_a]:!transition-colors [&_a]:!duration-200 [&_a:hover]:!text-[var(--color-accent)]">
