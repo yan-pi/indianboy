@@ -1,9 +1,15 @@
 'use client'
 import { TextMorph } from '@/components/ui/text-morph'
 import { ScrollProgress } from '@/components/ui/scroll-progress'
+import { Magnetic } from '@/components/ui/magnetic'
 import { useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
+import { motion } from 'motion/react'
+import {
+  VARIANTS_SECTION,
+  TRANSITION_SECTION,
+} from '@/components/home/animations'
 
 function CopyButton() {
   const [text, setText] = useState('Copy')
@@ -77,10 +83,20 @@ export default function LayoutBlogPost({
 
       {/* Blog Post Header - Back Arrow + Copy URL */}
       {isBlogPost && (
-        <div className="mb-8 flex items-center justify-between">
-          <BackButton />
-          <CopyButton />
-        </div>
+        <motion.div
+          className="mb-8 flex items-center justify-between"
+          initial="hidden"
+          animate="visible"
+          variants={VARIANTS_SECTION}
+          transition={TRANSITION_SECTION}
+        >
+          <Magnetic intensity={0.3} range={50}>
+            <BackButton />
+          </Magnetic>
+          <Magnetic intensity={0.3} range={50}>
+            <CopyButton />
+          </Magnetic>
+        </motion.div>
       )}
 
       {/* Blog Content */}
