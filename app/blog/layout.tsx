@@ -50,9 +50,23 @@ function CopyButton() {
 function BackButton() {
   const router = useRouter()
 
+  const handleBack = () => {
+    // Check if there's internal navigation history
+    const hasInternalHistory =
+      typeof window !== 'undefined' &&
+      document.referrer &&
+      document.referrer.includes(window.location.origin)
+
+    if (hasInternalHistory) {
+      router.back()
+    } else {
+      router.push('/')
+    }
+  }
+
   return (
     <button
-      onClick={() => router.back()}
+      onClick={handleBack}
       className="flex items-center gap-1 text-sm text-[var(--color-muted-foreground)] transition-colors hover:text-[var(--color-accent)]"
       type="button"
     >
