@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     description: 'Software Engineer | Open Source',
     images: [
       {
-        url: '/cover.jpg',
+        url: '/og/home.png',
         width: 1200,
         height: 630,
         alt: 'Yan Fernandes - indianboy.sh',
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Yan Fernandes - indianboy.sh',
     description: 'Software Engineer | Open Source',
-    images: ['/cover.jpg'],
+    images: ['/og/home.png'],
   },
 }
 
