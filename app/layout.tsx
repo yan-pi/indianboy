@@ -31,11 +31,20 @@ export const metadata: Metadata = {
     siteName: 'indianboy.sh',
     title: 'Yan Fernandes - indianboy.sh',
     description: 'Software Engineer | Open Source',
+    images: [
+      {
+        url: '/cover.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Yan Fernandes - indianboy.sh',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Yan Fernandes - indianboy.sh',
     description: 'Software Engineer | Open Source',
+    images: ['/cover.jpg'],
   },
 }
 
