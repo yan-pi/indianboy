@@ -1,6 +1,7 @@
 'use client'
 import { motion } from 'motion/react'
 import { SectionProps } from '@/lib/types'
+import Link from 'next/link'
 
 export function IntroSection({
   variants,
@@ -15,9 +16,9 @@ export function IntroSection({
     >
       <div className="flex-1">
         <p className="theme-text-muted">
-          Software Engineer with an unhealthy obsession for Linux and Neovim.
-          Former Techlead at FESF/SUS, now technical staff at Sats Capital while
-          crafting open-source projects in my spare time
+          Software Engineer with an unhealthy obsession for Linux and Neovim. <br />
+          Former Techlead at FESF/SUS, and Sats Capital. <br />
+          Now <Link className="text-(--color-primary)! underline" href="https://vinteum.org">Vinteum</ Link> Fellow contributing to open-source bitcoin projects fulltime. 
         </p>
       </div>
     </motion.section>

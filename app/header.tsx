@@ -19,15 +19,15 @@ export function Header() {
             Yan Fernandes
           </Link>
 
-          <span className="hidden font-serif text-lg text-[var(--color-muted-foreground)] italic sm:inline">
-            aka indianboy
-          </span>
+          {/* <span className="hidden font-serif text-lg text-[var(--color-muted-foreground)] italic sm:inline"> */}
+          {/*   aka indianboy */}
+          {/* </span> */}
         </div>
         <TextEffect
           as="p"
           preset="fade"
           per="char"
-          className="tect-lg text-[var(--color-muted-foreground)]"
+          className="tect-lg text-(--color-muted-foreground)]"
           delay={0.5}
         >
           Tech guy

@@ -23,20 +23,28 @@ export const PROJECTS: Project[] = [
 
 export const WORK_EXPERIENCE: WorkExperience[] = [
   {
-    company: 'Sats Capital',
-    title: 'Lead Engineer',
-    start: '2023',
+    company: 'Vinteum',
+    title: 'Fellow',
+    start: '2026',
     end: 'Present',
-    link: 'https://satscapital.com.br',
+    link: 'https://vinteum.org',
     id: 'work1',
   },
   {
+    company: 'Sats Capital',
+    title: 'Lead Engineer',
+    start: '2023',
+    end: '2026',
+    link: 'https://satscapital.com.br',
+    id: 'work2',
+  },
+  {
     company: 'FESF/SUS (Brazilian Gov HealthCare System)',
-    title: 'Lead Front-end Engineer',
+    title: 'TechLead',
     start: '2024',
     end: '2025',
     link: 'https://www.fesfsus.ba.gov.br/',
-    id: 'work2',
+    id: 'work3',
   },
   {
     company: 'Branef GovTech',
@@ -44,7 +52,7 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     start: '2022',
     end: '2022',
     link: 'https://branefgovtech.com.br/',
-    id: 'work3',
+    id: 'work4',
   },
 ]
 
@@ -62,16 +70,15 @@ export const SOCIAL_LINKS: SocialLink[] = [
     label: 'Twitter',
     link: 'https://twitter.com/yamigake',
   },
-  {
-    label: 'LinkedIn',
-    link: 'https://www.linkedin.com/in/yanfernandes/',
-  },
-  {
-    label: 'Instagram',
-    link: 'https://www.instagram.com/yanfsb',
-  },
+  // {
+  //   label: 'LinkedIn',
+  //   link: 'https://www.linkedin.com/in/yanfernandes/',
+  // },
+  // {
+  //   label: 'Instagram',
+  //   link: 'https://www.instagram.com/yanfsb',
+  // },
 ]
 
 export const EMAIL = 'yan@indianboy.sh'
 
-// export const EMAIL = 'yan@indianboy.sh'
