@@ -22,14 +22,14 @@ export const PROJECTS: Project[] = [
 ]
 
 export const WORK_EXPERIENCE: WorkExperience[] = [
-  {
-    company: 'Vinteum',
-    title: 'Fellow',
-    start: '2026',
-    end: 'Present',
-    link: 'https://vinteum.org',
-    id: 'work1',
-  },
+  // {
+  //   company: 'Vinteum',
+  //   title: 'Fellow',
+  //   start: '2026',
+  //   end: 'Present',
+  //   link: 'https://vinteum.org',
+  //   id: 'work1',
+  // },
   {
     company: 'Sats Capital',
     title: 'Lead Engineer',
