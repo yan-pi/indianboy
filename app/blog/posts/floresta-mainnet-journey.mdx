@@ -1,0 +1,322 @@
+---
+title: 'Three Weeks Stuck on IBD: Getting Floresta to Sync on a VPS'
+description: "My Floresta mainnet node was running but not syncing for three weeks. Here's what fixed it."
+publishedAt: '2026-04-30'
+tags: ['floresta', 'bitcoin', 'nixos', 'docker']
+author: 'Yan Fernandes'
+summary: "After getting Floresta to run on a Steam Deck for fun, I tried something more serious: a permanent mainnet node on my VPS. It sat there for three weeks doing absolutely nothing. This is the story of how I got it unstuck."
+---
+
+After running Floresta on a Steam Deck just to see if it would, I wanted something more serious.
+
+A permanent mainnet node on my VPS.
+
+So I deployed it, walked away, and came back three weeks later to find it had done basically nothing.
+
+Here's how I got it unstuck.
+
+## The Setup
+
+The VPS is a Hetzner CPX42 running NixOS. 
+
+I'd packaged Floresta as a NixOS module via my own fork, `yan-pi/floresta-nix`, on `feat/add-metrics`.
+
+Version pinned: **v0.8.0**.
+
+Network: **mainnet**.
+
+Service was `active (running)`. No crashes. No errors loud enough to page anyone.
+
+It just... wasn't moving.
+
+## Three Weeks. Zero Progress.
+
+I noticed something was off when I checked the RPC:
+
+```json
+{
+  "height": 947308,
+  "validated": 902967,
+  "progress": 0.953,
+  "ibd": true,
+  "leaf_count": 0,
+  "root_count": 0
+}
+```
+
+Progress at 95.3%. For three weeks.
+
+The number that stood out wasn't `progress`. It was **`leaf_count: 0`**.
+
+For a Utreexo node, that's the size of the accumulator.
+If it's zero, the node has received no proofs. None. The node was alive but starving.
+
+## What the Logs Said
+
+I tailed the journal expecting some smoking gun. What I got was the same line, on repeat:
+
+```
+INFO floresta_wire::p2p_wire::sync_node:
+  Not enough utreexo peers (we have 0), opening a new connection
+INFO floresta_wire::p2p_wire::node:
+  No peers found, using hardcoded addresses
+INFO floresta_wire::p2p_wire::node:
+  Disconnecting peer 139624 for not having the required services.
+  has=ServiceFlags(NETWORK|BLOOM|WITNESS|COMPACT_FILTERS|NETWORK_LIMITED|P2P_V2)
+  needs=ServiceFlags(0x1000000)
+```
+
+The node was discovering peers through DNS seeds, connecting to them, and immediately disconnecting from every single one.
+
+Because none of them advertised the service flag it wanted.
+
+I'm not going to pretend I know the protocol-level details of why `0x1000000` was the magic number my v0.8.0 wanted.
+I'll just say what I observed: my node wanted something nobody on the network was offering.
+
+Zero Utreexo peers.
+Zero proofs.
+Zero progress.
+
+## Attempt One: Adding a Bridge Node
+
+Bridge nodes are Bitcoin nodes that also serve Utreexo proofs.
+They exist precisely because the Utreexo network is still tiny and you can't just rely on peer discovery.
+
+Floresta's docs and Discord pointed me at a public one: `45.77.242.77:8333`, running `utreexod:0.5.1`.
+
+I added it to my service definition:
+
+```bash
+--connect 45.77.242.77:8333
+```
+
+Restarted. Tailed the logs. And finally: **a peer**.
+
+```
+INFO floresta_wire::p2p_wire::node:
+  New peer id=0 version=/btcwire:0.5.0/utreexod:0.5.1/
+  blocks=947308
+  services=ServiceFlags(NETWORK|BLOOM|WITNESS|NETWORK_LIMITED|P2P_V2|0x3000)
+INFO floresta_wire::p2p_wire::chain_selector:
+  Downloading headers from peer=0 at height=943999
+```
+
+Headers started flowing. The `chain_selector` phase actually progressed.
+
+I thought I was done.
+
+I wasn't.
+
+A few seconds later, the same log line came back:
+
+```
+Disconnecting peer 0 for not having the required services.
+  has=ServiceFlags(...|0x3000) needs=ServiceFlags(0x1000000)
+```
+
+Same problem. The bridge advertised one set of services, and v0.8.0 wanted a different one. Headers worked. Block sync didn't.
+
+So I had a bridge node, and a Floresta version that couldn't talk to it for the part that actually matters.
+
+## The Switch: Docker + Newer Version
+
+At this point I had two options. Patch v0.8.0 to accept the bridge, or stop fighting my custom NixOS fork and just run the **official Docker image** at the latest version.
+
+I picked Docker.
+
+The reasoning was operational, not technical: my fork was a maintenance burden, pinned to v0.8.0, and the upstream had a v0.9.1 release. The newer version, apparently, was compatible with the bridge node.
+
+I didn't dig into the protocol changes between versions. I just wanted my node to sync.
+
+```bash
+mkdir -p /tmp/floresta-build
+curl -sL https://github.com/vinteumorg/Floresta/archive/refs/tags/v0.9.1.tar.gz \
+  | tar xz --strip-components=1 -C /tmp/floresta-build
+
+docker build --build-arg BUILD_FEATURES=metrics -t floresta:v0.9.1 /tmp/floresta-build/
+```
+
+Built the image, swapped the systemd unit, and on the first restart with the bridge still configured, it just worked.
+
+The operational result was immediate. I'll get to the numbers in a sec.
+
+## Two Docker Gotchas That Cost Me Time
+
+While migrating, two things caught me out. Worth writing down.
+
+### 1. The Dockerfile has no ENTRYPOINT
+
+The official Dockerfile sets `CMD ["florestad"]` but no `ENTRYPOINT`. That's a meaningful difference.
+
+When you pass arguments to `docker run`, those arguments **replace the CMD entirely** instead of being appended to it. Which means:
+
+```bash
+# WRONG: Docker tries to execute "--network" as a command. Exit 127.
+docker run floresta:v0.9.1 --network bitcoin --data-dir /data
+
+# RIGHT: pass florestad explicitly, then the args.
+docker run floresta:v0.9.1 florestad --network bitcoin --data-dir /data
+```
+
+I lost a solid 10 minutes on this before I read the Dockerfile properly. If you're going to docker-run a Floresta image, always include `florestad` as the first arg.
+
+### 2. The `metrics` feature is opt-in
+
+I run a Prometheus + Grafana stack on this VPS. I assumed metrics on port 3333 would Just Work.
+
+They don't. `metrics` is a Cargo feature flag, and the default Docker build doesn't enable it.
+
+```bash
+# No metrics endpoint on :3333
+docker build -t floresta:v0.9.1 .
+
+# Metrics endpoint exposed
+docker build --build-arg BUILD_FEATURES=metrics -t floresta:v0.9.1 .
+```
+
+If you scrape Prometheus from your node, build with the feature flag. Otherwise port 3333 won't even open.
+
+## The NixOS systemd Unit
+
+This is the part I actually have full control over. NixOS module that runs the Docker container as a systemd service:
+
+```nix
+{ config, lib, pkgs, ... }:
+let
+  electrumPort = 50001;
+  rpcPort      = 8332;
+  metricsPort  = 3333;
+  dataDir      = "/var/lib/floresta";
+  image        = "floresta:v0.9.1";
+in
+{
+  systemd.tmpfiles.rules = [ "d ${dataDir} 0755 root root -" ];
+
+  systemd.services.floresta = {
+    description = "Floresta Bitcoin Node (Utreexo)";
+    after    = [ "docker.service" "network-online.target" ];
+    requires = [ "docker.service" ];
+    wantedBy = [ "multi-user.target" ];
+
+    preStart = ''${pkgs.docker}/bin/docker rm -f floresta 2>/dev/null || true'';
+
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = lib.strings.concatStringsSep " " [
+        "${pkgs.docker}/bin/docker run"
+        "--name floresta" "--rm" "--network host"
+        "-v ${dataDir}:/data"
+        image
+        "florestad"
+        "--network bitcoin"
+        "--data-dir /data"
+        "--electrum-address 0.0.0.0:${toString electrumPort}"
+        "--rpc-address 127.0.0.1:${toString rpcPort}"
+        "--connect 45.77.242.77:8333"
+      ];
+      ExecStop  = "${pkgs.docker}/bin/docker stop floresta";
+      Restart   = "on-failure";
+      RestartSec = "30s";
+    };
+  };
+
+  environment.systemPackages = [(
+    pkgs.writeShellScriptBin "floresta-cli" ''
+      exec ${pkgs.docker}/bin/docker exec floresta floresta-cli \
+        --rpc-host 127.0.0.1 --rpc-port ${toString rpcPort} "$@"
+    ''
+  )];
+
+  networking.firewall.allowedTCPPorts = [ electrumPort ];
+}
+```
+
+Couple of notes on this:
+
+- `--network host` because I want the Electrum server on `:50001` exposed to the network without messing with port forwarding.
+- The `floresta-cli` wrapper at the end is just a shell script that shells into the container so I can run `floresta-cli getblockchaininfo` from the host without thinking about it.
+- `Restart = "on-failure"` with a 30s backoff. If the bridge has a hiccup, I don't want my node spinning up and down every second.
+
+One nice surprise: my old NixOS service used `DynamicUser = true`, which created the data directory at `/var/lib/private/floresta/` with a symlink at `/var/lib/floresta`. The Docker container mounts `/var/lib/floresta`, follows the symlink, and finds all the existing chain data. **No migration needed.** I expected this to be a 30-minute headache and it took zero minutes.
+
+## IBD in About 50 Minutes
+
+After the switch, I tailed the logs and watched it actually work for the first time:
+
+```
+INFO floresta_wire::p2p_wire::node::peer_man:
+  New peer id=0 version=/btcwire:0.5.0/utreexod:0.5.1/
+INFO floresta_chain::pruned_utreexo::chain_state:
+  New tip! hash=... height=940024 tx_count=2167
+```
+
+About 5 blocks per second. ~2300 blocks every 16 minutes.
+
+| Time | validated | progress |
+|------|-----------|----------|
+| 15:53 | 939,969 | ~99.2% |
+| 16:20 | 943,531 | 99.6% |
+| 16:36 | 945,899 | 99.85% |
+| ~16:47 | **947,316** | **100%, IBD complete** |
+
+Final RPC state:
+
+```json
+{
+  "ibd": false,
+  "progress": 1.0,
+  "validated": 947316,
+  "height": 947316,
+  "leaf_count": 3096306129,
+  "root_count": 17
+}
+```
+
+`leaf_count: 3,096,306,129`.
+
+Three weeks of zero became three billion in 50 minutes. That number going from 0 to non-zero is what told me the accumulator was actually populated and the node was doing real work.
+
+## Why I'm Keeping the Bridge Node
+
+Out of curiosity, after IBD finished, I tried removing the `--connect 45.77.242.77:8333` from my unit and restarting. Just to see.
+
+Within seconds, back to zero Utreexo peers. The DNS seeds couldn't find anyone advertising the right services.
+
+So the bridge stays. Not because of some philosophical reason, just because the Utreexo network is small enough today that without that connect line, my node has nothing to talk to. If the network grows and discovery starts working, I'll revisit. Until then, `--connect` is permanent.
+
+## Observability
+
+Since I built with `BUILD_FEATURES=metrics`, port 3333 is now scrapable by Prometheus. Useful metrics: `block_height`, `peer_count`, `avg_block_processing_time`, `memory_usage_gigabytes`.
+
+I added an alert for the moment IBD completes, mostly so I could prove to myself it actually finished:
+
+```nix
+{
+  alert = "FlorestaIBDComplete";
+  expr = ''increase(block_height{job="floresta"}[20m]) < 1
+           and block_height{job="floresta"} > 945000'';
+  "for" = "10m";
+  labels.severity = "info";
+  annotations.summary = "Floresta IBD complete";
+  annotations.description = "Block height {{ $value | humanize }} has stabilized. IBD done.";
+}
+```
+
+Fired at 16:47. Felt good.
+
+## What I Learned
+
+Operational lessons, in order of how much pain they would have saved me:
+
+- **A Floresta node that says `active (running)` can be doing absolutely nothing.** Watch `leaf_count` and `progress` via RPC, not the systemd status.
+- **I think the `--connect` to a known bridge node is not optional on mainnet today.** The Utreexo network is too small for organic peer discovery.
+- **The official Docker image has no ENTRYPOINT.** Pass `florestad` explicitly as the first argument, every time.
+- **The `metrics` feature is opt-in.** If you want Prometheus scraping, you have to build with `--build-arg BUILD_FEATURES=metrics`.
+- **Pinning to an old version of a young protocol is asking for trouble.** I burned three weeks because I had a custom fork pinned to v0.8.0 and the network had moved on. Ride upstream when you can.
+- **`DynamicUser = true`'s `/var/lib/private/...` symlink survives a container migration.** Docker just follows the symlink. No data move needed.
+
+The Steam Deck experiment was for fun. This one was for keeps. I now have a Utreexo-powered Bitcoin full node running on my VPS, serving Electrum on `:50001`, and using a fraction of the disk a Bitcoin Core node would need.
+
+If you're trying to do the same and your IBD is mysteriously stuck, check your Floresta version, check your bridge node, and check `leaf_count`.
+
+That's where mine was hiding.

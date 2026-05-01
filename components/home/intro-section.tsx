@@ -18,9 +18,7 @@ export function IntroSection({
         <p className="theme-text-muted">
           Software Engineer with an unhealthy obsession for Linux and Neovim. <br />
           Former Techlead at FESF/SUS, and Sats Capital. <br />
-          {/* Now <Link className="text-(--color-primary)! underline" href="https://vinteum.org">Vinteum</ Link> Fellow contributing to open-source bitcoin projects fulltime.  */}
-
-          Now contributing to open-source bitcoin projects fulltime. 
+          Now <Link className="text-(--color-primary)! underline" href="https://vinteum.org">Vinteum</ Link> Fellow contributing to open-source bitcoin projects fulltime. 
         </p>
       </div>
     </motion.section>
