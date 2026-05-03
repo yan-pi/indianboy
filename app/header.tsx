@@ -27,7 +27,7 @@ export function Header() {
           as="p"
           preset="fade"
           per="char"
-          className="tect-lg text-(--color-muted-foreground)]"
+          className="text-lg text-(--color-muted-foreground)"
           delay={0.5}
         >
           Tech guy
