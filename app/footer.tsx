@@ -75,7 +75,7 @@ export function Footer() {
       <div className="flex items-center justify-between">
         <a href="https://github.com/yan-pi/portifolio" target="_blank">
           <TextLoop className="text-xs text-[var(--color-muted-foreground)]">
-            <span>© 2025 Yan Fernandes.</span>
+            <span>© 2026 Yan.</span>
             <span>Neovim is the superior code editor.</span>
           </TextLoop>
         </a>
