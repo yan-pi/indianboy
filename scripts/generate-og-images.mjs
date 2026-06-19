@@ -8,24 +8,19 @@ import { Resvg } from '@resvg/resvg-js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-// ============================================
-// CONFIGURATION - Matches lib/og/styles.ts
-// ============================================
+// CONFIGURATION - Catppuccin Mocha palette
 const OG_COLORS = {
-  background: '#282828',
-  foreground: '#ebdbb2',
-  primary: '#b8bb26',
-  accent: '#83a598',
-  muted: '#a89984',
-  card: '#3c3836',
+  background: '#1e1e2e',
+  foreground: '#cdd6f4',
+  primary: '#a6e3a1',
+  accent: '#89b4fa',
+  muted: '#9399b2',
+  card: '#313244',
 }
 
 const OG_SIZE = { width: 1200, height: 630 }
 
-// ============================================
 // HELPER FUNCTIONS
-// ============================================
-
 async function loadFonts() {
   console.log('📦 Loading fonts from Google Fonts...')
 
@@ -49,7 +44,9 @@ async function loadFonts() {
     }
 
     const fontUrl = fontUrlMatch[1]
-    console.log(`   Found font URL for weight ${weight}: ${fontUrl.substring(0, 60)}...`)
+    console.log(
+      `   Found font URL for weight ${weight}: ${fontUrl.substring(0, 60)}...`,
+    )
 
     const fontResponse = await fetch(fontUrl)
     return fontResponse.arrayBuffer()
@@ -90,10 +87,7 @@ async function renderToImage(element, fonts) {
   return pngData.asPng()
 }
 
-// ============================================
 // IMAGE COMPONENTS (Satori JSX format)
-// ============================================
-
 function createHomepageOG() {
   return {
     type: 'div',
@@ -147,19 +141,6 @@ function createHomepageOG() {
                     fontFamily: 'Inter',
                   },
                   children: 'Yan Fernandes',
-                },
-              },
-              // Alias
-              {
-                type: 'div',
-                props: {
-                  style: {
-                    fontSize: 32,
-                    color: OG_COLORS.primary,
-                    marginBottom: '32px',
-                    fontFamily: 'Inter',
-                  },
-                  children: 'aka indianboy',
                 },
               },
               // Description
@@ -377,7 +358,7 @@ function createBlogPostOG(post) {
                                 color: OG_COLORS.muted,
                                 fontFamily: 'Inter',
                               },
-                              children: '@indianboy',
+                              children: '@yamigake',
                             },
                           },
                         ],
@@ -405,10 +386,7 @@ function createBlogPostOG(post) {
   }
 }
 
-// ============================================
 // MAIN EXECUTION
-// ============================================
-
 async function main() {
   console.log('🎨 Generating OG images...')
 
@@ -451,7 +429,10 @@ async function main() {
       fs.writeFileSync(path.join(outputDir, `${post.slug}.png`), png)
       console.log(`   ✓ Generated: public/og/${post.slug}.png`)
     } catch (error) {
-      console.error(`   ❌ Failed to generate OG for ${post.slug}:`, error.message)
+      console.error(
+        `   ❌ Failed to generate OG for ${post.slug}:`,
+        error.message,
+      )
     }
   }
 

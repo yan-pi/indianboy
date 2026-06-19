@@ -1,10 +1,11 @@
+// Catppuccin Mocha palette
 export const OG_COLORS = {
-  background: '#282828',
-  foreground: '#ebdbb2',
-  primary: '#b8bb26',
-  accent: '#83a598',
-  muted: '#a89984',
-  card: '#3c3836',
+  background: '#1e1e2e',
+  foreground: '#cdd6f4',
+  primary: '#a6e3a1',
+  accent: '#89b4fa',
+  muted: '#9399b2',
+  card: '#313244',
 } as const
 
 export const OG_SIZE = { width: 1200, height: 630 }

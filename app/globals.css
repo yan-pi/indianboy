@@ -26,40 +26,40 @@ html {
 }
 
 :root {
-  /* Gruvbox-inspired Theme Colors */
-  --color-background: #fbf1c7;
-  --color-foreground: #3c3836;
-  --color-card: #f9f5d7;
-  --color-card-foreground: #3c3836;
-  --color-popover: #f9f5d7;
-  --color-popover-foreground: #3c3836;
-  --color-primary: #b8bb26;
-  --color-primary-foreground: #282828;
-  --color-secondary: #d5c4a1;
-  --color-secondary-foreground: #3c3836;
-  --color-muted: #f2e5bc;
-  --color-muted-foreground: #7c6f64;
-  --color-accent: #83a598;
-  --color-accent-foreground: #fbf1c7;
-  --color-destructive: #fb4934;
-  --color-destructive-foreground: #fbf1c7;
-  --color-border: #d5c4a1;
-  --color-input: #d5c4a1;
-  --color-ring: #b8bb26;
-  /* Chart & Sidebar (optional, not mapped to classes yet) */
-  --color-chart-1: #928374;
-  --color-chart-2: #d3869b;
-  --color-chart-3: #8ec07c;
-  --color-chart-4: #fabd2f;
-  --color-chart-5: #b8bb26;
-  --color-sidebar: #f9f5d7;
-  --color-sidebar-foreground: #3c3836;
-  --color-sidebar-primary: #b8bb26;
-  --color-sidebar-primary-foreground: #282828;
-  --color-sidebar-accent: #83a598;
-  --color-sidebar-accent-foreground: #fbf1c7;
-  --color-sidebar-border: #d5c4a1;
-  --color-sidebar-ring: #b8bb26;
+  /* Catppuccin Latte - Theme Colors */
+  --color-background: #eff1f5;
+  --color-foreground: #4c4f69;
+  --color-card: #e6e9ef;
+  --color-card-foreground: #4c4f69;
+  --color-popover: #e6e9ef;
+  --color-popover-foreground: #4c4f69;
+  --color-primary: #40a02b;
+  --color-primary-foreground: #eff1f5;
+  --color-secondary: #ccd0da;
+  --color-secondary-foreground: #4c4f69;
+  --color-muted: #e6e9ef;
+  --color-muted-foreground: #7c7f93;
+  --color-accent: #1e66f5;
+  --color-accent-foreground: #eff1f5;
+  --color-destructive: #d20f39;
+  --color-destructive-foreground: #eff1f5;
+  --color-border: #ccd0da;
+  --color-input: #ccd0da;
+  --color-ring: #40a02b;
+  /* Chart & Sidebar */
+  --color-chart-1: #8839ef;
+  --color-chart-2: #ea76cb;
+  --color-chart-3: #40a02b;
+  --color-chart-4: #df8e1d;
+  --color-chart-5: #1e66f5;
+  --color-sidebar: #e6e9ef;
+  --color-sidebar-foreground: #4c4f69;
+  --color-sidebar-primary: #40a02b;
+  --color-sidebar-primary-foreground: #eff1f5;
+  --color-sidebar-accent: #1e66f5;
+  --color-sidebar-accent-foreground: #eff1f5;
+  --color-sidebar-border: #ccd0da;
+  --color-sidebar-ring: #40a02b;
 
   /* Fonts */
   --font-sans:
@@ -97,51 +97,52 @@ html {
   --animation-spring-damping: 4.1;
   --animation-spring-mass: 0.2;
 
-  /* Syntax Highlighting (Gruvbox-inspired) */
-  --sh-class: #fabd2f;
-  --sh-sign: #b8bb26;
-  --sh-string: #b8bb26;
-  --sh-keyword: #fb4934;
-  --sh-comment: #928374;
-  --sh-jsxliterals: #d3869b;
-  --sh-property: #8ec07c;
-  --sh-entity: #83a598;
+  /* Syntax Highlighting (Catppuccin Latte) */
+  --sh-class: #df8e1d;
+  --sh-sign: #fe640b;
+  --sh-string: #40a02b;
+  --sh-keyword: #8839ef;
+  --sh-comment: #7c7f93;
+  --sh-jsxliterals: #ea76cb;
+  --sh-property: #1e66f5;
+  --sh-entity: #d20f39;
 }
 
 .dark {
-  --color-background: #282828;
-  --color-foreground: #ebdbb2;
-  --color-card: #3c3836;
-  --color-card-foreground: #ebdbb2;
-  --color-popover: #3c3836;
-  --color-popover-foreground: #ebdbb2;
-  --color-primary: #b8bb26;
-  --color-primary-foreground: #282828;
-  --color-secondary: #665c54;
-  --color-secondary-foreground: #ebdbb2;
-  --color-muted: #3c3836;
-  --color-muted-foreground: #a89984;
-  --color-accent: #83a598;
-  --color-accent-foreground: #282828;
-  --color-destructive: #fb4934;
-  --color-destructive-foreground: #282828;
-  --color-border: #665c54;
-  --color-input: #665c54;
-  --color-ring: #b8bb26;
-  /* Chart & Sidebar (optional, not mapped to classes yet) */
-  --color-chart-1: #928374;
-  --color-chart-2: #d3869b;
-  --color-chart-3: #8ec07c;
-  --color-chart-4: #fabd2f;
-  --color-chart-5: #b8bb26;
-  --color-sidebar: #3c3836;
-  --color-sidebar-foreground: #ebdbb2;
-  --color-sidebar-primary: #b8bb26;
-  --color-sidebar-primary-foreground: #282828;
-  --color-sidebar-accent: #83a598;
-  --color-sidebar-accent-foreground: #282828;
-  --color-sidebar-border: #665c54;
-  --color-sidebar-ring: #b8bb26;
+  /* Catppuccin Mocha - Theme Colors */
+  --color-background: #1e1e2e;
+  --color-foreground: #cdd6f4;
+  --color-card: #313244;
+  --color-card-foreground: #cdd6f4;
+  --color-popover: #313244;
+  --color-popover-foreground: #cdd6f4;
+  --color-primary: #a6e3a1;
+  --color-primary-foreground: #1e1e2e;
+  --color-secondary: #45475a;
+  --color-secondary-foreground: #cdd6f4;
+  --color-muted: #313244;
+  --color-muted-foreground: #9399b2;
+  --color-accent: #89b4fa;
+  --color-accent-foreground: #1e1e2e;
+  --color-destructive: #f38ba8;
+  --color-destructive-foreground: #1e1e2e;
+  --color-border: #45475a;
+  --color-input: #45475a;
+  --color-ring: #a6e3a1;
+  /* Chart & Sidebar */
+  --color-chart-1: #cba6f7;
+  --color-chart-2: #f5c2e7;
+  --color-chart-3: #a6e3a1;
+  --color-chart-4: #f9e2af;
+  --color-chart-5: #89b4fa;
+  --color-sidebar: #313244;
+  --color-sidebar-foreground: #cdd6f4;
+  --color-sidebar-primary: #a6e3a1;
+  --color-sidebar-primary-foreground: #1e1e2e;
+  --color-sidebar-accent: #89b4fa;
+  --color-sidebar-accent-foreground: #1e1e2e;
+  --color-sidebar-border: #45475a;
+  --color-sidebar-ring: #a6e3a1;
 }
 
 /* Utility Classes */
@@ -307,8 +308,8 @@ html {
   border-color: var(--color-border);
 }
 
-@import '../node_modules/prism-themes/themes/prism-gruvbox-light.css';
-@import '../node_modules/prism-themes/themes/prism-gruvbox-dark.css';
+@import '../styles/prism-catppuccin-latte.css';
+@import '../styles/prism-catppuccin-mocha.css';
 @import '../node_modules/katex/dist/katex.min.css';
 
 /* Prism syntax highlighting */

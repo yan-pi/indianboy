@@ -31,7 +31,7 @@ export function BlogComments({ slug }: BlogCommentsProps) {
       <Giscus
         id="comments"
         {...GISCUS_CONFIG}
-        theme={resolvedTheme === 'dark' ? 'gruvbox_dark' : 'gruvbox_light'}
+        theme={resolvedTheme === 'dark' ? 'catppuccin_mocha' : 'catppuccin_latte'}
         loading="lazy"
       />
     </section>
